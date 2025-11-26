@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Asha Clean' }}</title>
-
-    {{-- TailwindCSS --}}
+    
     <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- Google Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="//unpkg.com/alpinejs" defer></script>
 
     <style>
         body {
@@ -20,21 +20,31 @@
 <body class="bg-white text-gray-800">
 
     {{-- NAVBAR --}}
-    <header class="w-full bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="text-2xl font-bold text-emerald-600">Asha Clean</div>
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-xl bg-[#20cfff] text-white font-bold grid place-items-center">A</div>
+        <span class="font-extrabold text-xl text-slate-800">Asha <span class="text-[#11d3ff]">Clean</span></span>
+      </a>
 
-            <nav class="space-x-8 hidden md:flex">
-                <a href="/" class="hover:text-emerald-600">Home</a>
-                <a href="/about" class="hover:text-emerald-600">About</a>
-                <a href="/services" class="hover:text-emerald-600">Services</a>
-            </nav>
+      <nav class="hidden md:flex items-center gap-1">
+        <a href="/" class="text-slate-700 hover:text-slate-900 px-3 py-2 rounded-md">Home</a>
+        <a href="/about" class="text-slate-700 hover:text-slate-900 px-3 py-2 rounded-md">About</a>
+        <a href="/services" class="text-slate-700 hover:text-slate-900 px-3 py-2 rounded-md">Services</a>
+        <a href="/booking" class="text-slate-700 hover:text-slate-900 px-3 py-2 rounded-md">Booking</a>
+        <a href="/faq" class="text-slate-700 hover:text-slate-900 px-3 py-2 rounded-md">FAQ</a>
+        <a href="/blog" class="text-slate-700 hover:text-slate-900 px-3 py-2 rounded-md">Blog</a>
 
-            <button class="md:hidden text-gray-700">☰</button>
-        </div>
-    </header>
+        <a href="/booking" class="ml-2 bg-[#20cfff] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#006eb7]">
+          Book Now
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
 
-    {{-- MAIN CONTENT --}}
+<!-- main -->
     <main>
         @yield('content')
     </main>
