@@ -100,4 +100,140 @@
   </div>
 </section>
 
+<!-- Cara Memesan -->
+<section class="py-20 bg-[#72e0ff] relative overflow-hidden mt-10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-12 items-center">
+
+        <!-- Gambar HP -->
+        <div class="flex justify-center">
+            <div class="relative w-[300px] md:w-[360px]">
+                <img 
+                    src="/images/mockup-app.png" 
+                    alt="Mockup App" 
+                    class="rounded-3xl shadow-2xl border border-gray-300"
+                >
+            </div>
+        </div>
+
+        <!-- Step -->
+        <div class="text-white">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-8">
+                Cara Memesan Layanan di <span class="text-yellow-300">AshaClean</span>
+            </h2>
+
+            <div class="space-y-6">
+
+                <!-- Step 1 -->
+                <div class="flex items-start space-x-4">
+                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">1</span>
+                    <div>
+                        <h3 class="text-xl font-bold">Pilih Layanan</h3>
+                        <p class="text-white/90">Pilih layanan sesuai kebutuhanmu.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex items-start space-x-4">
+                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">2</span>
+                    <div>
+                        <h3 class="text-xl font-bold">Lengkapi Detail Pesanan</h3>
+                        <p class="text-white/90">Isi data diri, durasi, dan jadwalkan pengerjaan.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex items-start space-x-4">
+                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">3</span>
+                    <div>
+                        <h3 class="text-xl font-bold">Lakukan Pembayaran</h3>
+                        <p class="text-white/90">Pilih metode pembayaran dan selesaikan transaksi.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex items-start space-x-4">
+                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">4</span>
+                    <div>
+                        <h3 class="text-xl font-bold">Helper Siap Membantu!</h3>
+                        <p class="text-white/90">Tim datang sesuai jadwal yang kamu pilih.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-20 bg-[#f5f8fa]">
+    <div class="max-w-5xl mx-auto px-6">
+
+        <h2 class="text-4xl font-extrabold text-center text-slate-800 mb-12">
+            Paling Sering Ditanyakan di <span class="text-[#20cfff]">AshaClean</span>
+        </h2>
+
+        <div class="space-y-6">
+
+            <!-- ITEM FAQ -->
+            @foreach([
+                [
+                    'q' => 'Apa itu AshaClean?',
+                    'a' => 'AshaClean adalah platform penyedia layanan jasa kebersihan untuk rumah dan kantor Anda.'
+                ],
+                [
+                    'q' => 'Jenis bangunan apa saja yang dapat menggunakan layanan General Cleaning?',
+                    'a' => 'General Cleaning cocok untuk rumah, apartemen, kantor, ruko, dan tempat usaha lainnya.'
+                ],
+                [
+                    'q' => 'Apa jadwal yang sudah dipesan dapat diubah?',
+                    'a' => 'Tentu, Anda dapat mengubah jadwal minimal 2 jam sebelum jam layanan dimulai.'
+                ],
+                [
+                    'q' => 'Apakah ada garansi untuk layanan AC Cleaning?',
+                    'a' => 'Ya, kami memberikan garansi 3 hari apabila terjadi kendala setelah layanan.'
+                ]
+            ] as $faq)
+
+            <div 
+                x-data="{ open: false }" 
+                class="bg-white rounded-xl shadow border overflow-hidden"
+            >
+                <!-- Header FAQ -->
+                <button 
+                    @click="open = !open" 
+                    class="w-full flex justify-between items-center px-6 py-5 text-left"
+                >
+                    <span class="font-semibold text-lg text-slate-800">{{ $faq['q'] }}</span>
+
+                    <svg 
+                        class="w-6 h-6 text-slate-600 transform transition-transform duration-300"
+                        :class="open ? 'rotate-180' : ''" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        viewBox="0 0 24 24"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+
+                <!-- Content FAQ -->
+                <div 
+                    x-show="open" 
+                    x-transition.duration.300ms 
+                    class="px-6 pb-5 text-slate-600"
+                >
+                    {{ $faq['a'] }}
+                </div>
+            </div>
+
+            @endforeach
+
+        </div>
+
+    </div>
+</section>
+
+
 @endsection
