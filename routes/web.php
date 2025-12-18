@@ -74,3 +74,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
+
+// route dummy forgot pw
+
+Route::get('/forgot-password', function () {return 'Forgot password page not implemented yet';})->name('password.request');
