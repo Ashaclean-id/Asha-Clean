@@ -527,10 +527,16 @@
         <div class="grid md:grid-cols-3 gap-10">
 
             <!-- Card 1 -->
-            <div class="relative bg-white rounded-2xl shadow-lg p-8 pt-14">
+            <div class="group relative bg-white rounded-2xl shadow-lg p-8 pt-14
+                        transition-all duration-300
+                        hover:-translate-y-2 hover:shadow-2xl hover:bg-[#f7fdff]">
+
                 <img
                     src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d"
-                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2 border-4 border-white shadow"
+                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2
+                           border-4 border-white shadow
+                           transition-all duration-300
+                           group-hover:-top-10 group-hover:shadow-lg"
                 >
 
                 <p class="text-slate-600 leading-relaxed text-center">
@@ -543,16 +549,22 @@
                     @midiforreal
                 </p>
 
-                <div class="mt-3 text-center text-yellow-400">
+                <div class="mt-3 text-center text-yellow-400 transition group-hover:scale-110">
                     ★★★★★
                 </div>
             </div>
 
             <!-- Card 2 -->
-            <div class="relative bg-white rounded-2xl shadow-lg p-8 pt-14">
+            <div class="group relative bg-white rounded-2xl shadow-lg p-8 pt-14
+                        transition-all duration-300
+                        hover:-translate-y-2 hover:shadow-2xl hover:bg-[#f7fdff]">
+
                 <img
                     src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6"
-                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2 border-4 border-white shadow"
+                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2
+                           border-4 border-white shadow
+                           transition-all duration-300
+                           group-hover:-top-10 group-hover:shadow-lg"
                 >
 
                 <p class="text-slate-600 leading-relaxed text-center">
@@ -565,16 +577,22 @@
                     @keweitay
                 </p>
 
-                <div class="mt-3 text-center text-yellow-400">
+                <div class="mt-3 text-center text-yellow-400 transition group-hover:scale-110">
                     ★★★★★
                 </div>
             </div>
 
             <!-- Card 3 -->
-            <div class="relative bg-white rounded-2xl shadow-lg p-8 pt-14">
+            <div class="group relative bg-white rounded-2xl shadow-lg p-8 pt-14
+                        transition-all duration-300
+                        hover:-translate-y-2 hover:shadow-2xl hover:bg-[#f7fdff]">
+
                 <img
                     src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c"
-                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2 border-4 border-white shadow"
+                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2
+                           border-4 border-white shadow
+                           transition-all duration-300
+                           group-hover:-top-10 group-hover:shadow-lg"
                 >
 
                 <p class="text-slate-600 leading-relaxed text-center">
@@ -587,7 +605,7 @@
                     @miss_luxe
                 </p>
 
-                <div class="mt-3 text-center text-yellow-400">
+                <div class="mt-3 text-center text-yellow-400 transition group-hover:scale-110">
                     ★★★★★
                 </div>
             </div>
@@ -595,35 +613,38 @@
         </div>
 
         <!-- CTA REVIEW -->
-<section class="py-16">
-  <div class="max-w-4xl mx-auto px-4 text-center">
+        <section class="py-16">
+          <div class="max-w-4xl mx-auto px-4 text-center">
 
-    <h3 class="text-3xl md:text-4xl font-extrabold text-slate-800">
-      Sekarang waktunya kamu buat
-      <span class="text-[#20cfff]">ngasih ulasan!</span>
-    </h3>
+            <h3 class="text-3xl md:text-4xl font-extrabold text-slate-800">
+              Sekarang waktunya kamu buat
+              <span class="text-[#20cfff]">ngasih ulasan!</span>
+            </h3>
 
-    <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
-      Ceritakan pengalamanmu menggunakan layanan AshaClean
-      dan bantu orang lain menemukan layanan kebersihan terbaik.
-    </p>
+            <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
+              Ceritakan pengalamanmu menggunakan layanan AshaClean
+              dan bantu orang lain menemukan layanan kebersihan terbaik.
+            </p>
 
-    <!-- Input dummy -->
-    <a href="{{ route('login') }}"
-       class="mt-10 block w-full md:w-3/4 mx-auto px-6 py-4 rounded-xl
-              border border-slate-300 text-slate-500 text-left
-              hover:border-[#20cfff] hover:ring-2 hover:ring-[#20cfff]/30 transition">
-      Tulis ulasan kamu di sini...
-    </a>
+            <!-- Input dummy -->
+            <a href="{{ route('login') }}"
+               class="mt-10 block w-full md:w-3/4 mx-auto px-6 py-4 rounded-xl
+                      border border-slate-300 text-slate-500 text-left
+                      hover:border-[#20cfff] hover:ring-2 hover:ring-[#20cfff]/30 transition">
+              Tulis ulasan kamu di sini...
+            </a>
 
-    <!-- Button -->
-    <a href="{{ route('login') }}"
-       class="inline-block mt-6 bg-[#20cfff] text-white px-10 py-3 rounded-xl font-semibold
-              hover:bg-[#006eb7] transition">
-      Login & Kirim Ulasan
-    </a>
+            <!-- Button -->
+            <a href="{{ route('login') }}"
+               class="inline-block mt-6 bg-[#20cfff] text-white px-10 py-3 rounded-xl font-semibold
+                      hover:bg-[#006eb7] transition">
+              Login & Kirim Ulasan
+            </a>
 
-  </div>
+          </div>
+        </section>
+
+    </div>
 </section>
 
 

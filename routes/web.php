@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PesanController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\AdminDashboardController;
+
+use App\Http\Controllers\Auth\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -59,3 +64,13 @@ Route::post('/pesan/submit', [PesanController::class, 'submit'])
 // buat login
 
 Route::get('/login', function () { return view('auth.login');})->name('login');
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/review', [ReviewController::class, 'create']);});
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+});
+
+//register
+
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
