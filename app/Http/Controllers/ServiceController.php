@@ -6,19 +6,8 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function kasur()
     {
-        return view('services.index');
+        return view('services.kasur');
     }
-
-    public function cuci()
-    {
-        return view('services.cuci'); 
-    }
-
-    public function detail($slug)
-    {
-        return view('services.detail', compact('slug'));
-    }
-
 }
