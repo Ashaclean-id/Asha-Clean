@@ -4,10 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PesanController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminDashboardController;
-
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServicePageController;
 
 
 /*
@@ -15,66 +16,77 @@ use App\Http\Controllers\Auth\RegisterController;
 | PAGE (STATIC)
 |--------------------------------------------------------------------------
 */
-Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/about', [PageController::class, 'about'])->name('about');
-Route::get('/services', [PageController::class, 'services'])->name('services');
+Route::get('/', [PageController::class, 'home']);
 
-/*
-|--------------------------------------------------------------------------
-| SERVICES (DETAIL)
-|--------------------------------------------------------------------------
-*/
-Route::prefix('services')->name('services.')->group(function () {
+Route::get('/services', [PageController::class, 'services']);
 
-    // Layanan utama
-    Route::get('/cuci-sofa-kasur-karpet', [ServiceController::class, 'cuci'])
-        ->name('cuci');
 
-    Route::get('/kasur', [ServiceController::class, 'kasur'])
-        ->name('kasur');
 
-    Route::get('/sofa', [ServiceController::class, 'sofa'])
-        ->name('sofa');
-
-    Route::get('/karpet', [ServiceController::class, 'karpet'])
-        ->name('karpet');
-
-    Route::get('/baby-care', [ServiceController::class, 'baby'])
-        ->name('baby');
-
-    Route::get('/general-cleaning', [ServiceController::class, 'general'])
-        ->name('general');
-
-    Route::get('/interior-mobil', [ServiceController::class, 'mobil'])
-        ->name('mobil');
-});
-
-/*
-|--------------------------------------------------------------------------
-| PESAN / BOOKING
-|--------------------------------------------------------------------------
-*/
 Route::get('/pesan/{service}', [PesanController::class, 'index'])
     ->name('pesan.index');
 
 Route::post('/pesan/submit', [PesanController::class, 'submit'])
     ->name('pesan.submit');
 
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
-// buat login
-
-Route::get('/login', function () { return view('auth.login');})->name('login');
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/review', [ReviewController::class, 'create']);});
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+Route::get('/home', function () {
+    return view('home');
+})->middleware('auth')->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
 
-//register
 
+/*
+|--------------------------------------------------------------------------
+| ADMIN
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| REGISTER
+|--------------------------------------------------------------------------
+*/
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
 
-// route dummy forgot pw
+/*
+|--------------------------------------------------------------------------
+| DUMMY
+|--------------------------------------------------------------------------
+*/
+Route::get('/forgot-password', function () {
+    return 'Forgot password page not implemented yet';
+})->name('password.request');
 
-Route::get('/forgot-password', function () {return 'Forgot password page not implemented yet';})->name('password.request');
+
+// ini services
+
+Route::get('/services/{slug}', [PageController::class, 'serviceDetail'])
+    ->name('services.show');
+
+Route::get('/services/sofa', fn () => redirect('/services/cuci-sofa-kain'))
+    ->name('services.sofa');
+
+Route::get('/services/karpet', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
+    ->name('services.karpet');
+
+Route::get('/services/baby', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
+    ->name('services.baby');
+
+Route::get('/services/general', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
+    ->name('services.general');
+
+Route::get('/services/mobil', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
+    ->name('services.mobil');

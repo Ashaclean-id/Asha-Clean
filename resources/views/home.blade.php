@@ -71,159 +71,125 @@
     <!-- Service Cards -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-      <!-- 1. Kasur -->
-      <a href="{{ route('services.kasur') }}"
-         class="group h-full flex flex-col p-7 bg-white border rounded-2xl shadow-sm hover:shadow-lg transition">
+      <!-- 1. Cuci Kasur & Springbed -->
+      <a href="{{ url('/services/cuci-springbed') }}"
+         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <div class="flex items-center justify-center w-14 h-14 rounded-xl 
-                    bg-blue-50 mb-5 
-                    group-hover:bg-blue-100 
-                    group-hover:scale-110 
-                    transition">
-          🛏️
+        <img src="https://source.unsplash.com/600x400/?mattress,cleaning&sig=1"
+             alt="Cuci Kasur"
+             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+
+        <div class="p-7 flex flex-col h-full">
+          <h3 class="text-xl font-bold text-slate-800">Cuci Kasur & Springbed</h3>
+          <p class="text-slate-600 mt-2">
+            Bebas tungau, bakteri, dan bau tidak sedap dengan deep cleaning profesional.
+          </p>
+          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+            Lihat detail →
+          </span>
         </div>
-
-        <h3 class="text-xl font-bold text-slate-800">
-          Cuci Kasur & Springbed
-        </h3>
-
-        <p class="text-slate-600 mt-2">
-          Bebas tungau, bakteri, dan bau tidak sedap dengan deep cleaning profesional.
-        </p>
-
-        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-          Lihat detail →
-        </span>
       </a>
 
-      <!-- 2. Sofa -->
+      <!-- 2. Cuci Sofa & Kursi -->
       <a href="{{ route('services.sofa') }}"
-         class="group h-full flex flex-col p-7 bg-white border rounded-2xl shadow-sm hover:shadow-lg transition">
+         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <div class="flex items-center justify-center w-14 h-14 rounded-xl 
-                    bg-green-50 mb-5 
-                    group-hover:bg-green-100 
-                    group-hover:scale-110 
-                    transition">
-          🛋️
+        <img src="https://source.unsplash.com/600x400/?sofa,cleaning&sig=2"
+             alt="Cuci Sofa"
+             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+
+        <div class="p-7 flex flex-col h-full">
+          <h3 class="text-xl font-bold text-slate-800">Cuci Sofa & Kursi</h3>
+          <p class="text-slate-600 mt-2">
+            Aman untuk kain, kulit, dan artificial. Warna tetap terjaga.
+          </p>
+          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+            Lihat detail →
+          </span>
         </div>
-
-        <h3 class="text-xl font-bold text-slate-800">
-          Cuci Sofa & Kursi
-        </h3>
-
-        <p class="text-slate-600 mt-2">
-          Aman untuk kain, kulit, dan artificial. Warna tetap terjaga.
-        </p>
-
-        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-          Lihat detail →
-        </span>
       </a>
 
       <!-- 3. Karpet & Gorden -->
       <a href="{{ route('services.karpet') }}"
-         class="group h-full flex flex-col p-7 bg-white border rounded-2xl shadow-sm hover:shadow-lg transition">
+         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <div class="flex items-center justify-center w-14 h-14 rounded-xl 
-                    bg-yellow-50 mb-5 
-                    group-hover:bg-yellow-100 
-                    group-hover:scale-110 
-                    transition">
-          🧺
+        <img src="https://source.unsplash.com/600x400/?carpet,curtain,cleaning&sig=3"
+             alt="Cuci Karpet"
+             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+
+        <div class="p-7 flex flex-col h-full">
+          <h3 class="text-xl font-bold text-slate-800">Karpet & Gorden</h3>
+          <p class="text-slate-600 mt-2">
+            Cuci bersih karpet dan gorden untuk udara ruangan yang lebih sehat.
+          </p>
+          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+            Lihat detail →
+          </span>
         </div>
-
-        <h3 class="text-xl font-bold text-slate-800">
-          Karpet & Gorden
-        </h3>
-
-        <p class="text-slate-600 mt-2">
-          Cuci bersih karpet dan gorden untuk udara ruangan yang lebih sehat.
-        </p>
-
-        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-          Lihat detail →
-        </span>
       </a>
 
-      <!-- 4. Baby Care -->
+      <!-- 4. Baby Care Cleaning -->
       <a href="{{ route('services.baby') }}"
-         class="group h-full flex flex-col p-7 bg-white border rounded-2xl shadow-sm hover:shadow-lg transition">
+         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <div class="flex items-center justify-center w-14 h-14 rounded-xl 
-                    bg-pink-50 mb-5 
-                    group-hover:bg-pink-100 
-                    group-hover:scale-110 
-                    transition">
-          👶
+        <img src="https://source.unsplash.com/600x400/?baby,toys,cleaning&sig=4"
+             alt="Baby Care Cleaning"
+             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+
+        <div class="p-7 flex flex-col h-full">
+          <h3 class="text-xl font-bold text-slate-800">Baby Care Cleaning</h3>
+          <p class="text-slate-600 mt-2">
+            Layanan khusus perlengkapan bayi dengan cairan aman & non-toxic.
+          </p>
+          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+            Lihat detail →
+          </span>
         </div>
-
-        <h3 class="text-xl font-bold text-slate-800">
-          Baby Care Cleaning
-        </h3>
-
-        <p class="text-slate-600 mt-2">
-          Layanan khusus perlengkapan bayi dengan cairan aman & non-toxic.
-        </p>
-
-        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-          Lihat detail →
-        </span>
       </a>
 
       <!-- 5. General Cleaning -->
       <a href="{{ route('services.general') }}"
-         class="group h-full flex flex-col p-7 bg-white border rounded-2xl shadow-sm hover:shadow-lg transition">
+         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <div class="flex items-center justify-center w-14 h-14 rounded-xl 
-                    bg-purple-50 mb-5 
-                    group-hover:bg-purple-100 
-                    group-hover:scale-110 
-                    transition">
-          🧹
+        <img src="https://source.unsplash.com/600x400/?house,cleaning,team&sig=5"
+             alt="General Cleaning"
+             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+
+        <div class="p-7 flex flex-col h-full">
+          <h3 class="text-xl font-bold text-slate-800">General Cleaning</h3>
+          <p class="text-slate-600 mt-2">
+            Pembersihan ruangan menyeluruh sesuai kebutuhan Anda.
+          </p>
+          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+            Lihat detail →
+          </span>
         </div>
-
-        <h3 class="text-xl font-bold text-slate-800">
-          General Cleaning
-        </h3>
-
-        <p class="text-slate-600 mt-2">
-          Pembersihan ruangan menyeluruh sesuai kebutuhan Anda.
-        </p>
-
-        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-          Lihat detail →
-        </span>
       </a>
 
       <!-- 6. Interior Mobil -->
       <a href="{{ route('services.mobil') }}"
-         class="group h-full flex flex-col p-7 bg-white border rounded-2xl shadow-sm hover:shadow-lg transition">
+         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <div class="flex items-center justify-center w-14 h-14 rounded-xl 
-                    bg-sky-50 mb-5 
-                    group-hover:bg-sky-100 
-                    group-hover:scale-110 
-                    transition">
-          🚗
+        <img src="https://source.unsplash.com/600x400/?car,interior,cleaning&sig=6"
+             alt="Interior Mobil"
+             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+
+        <div class="p-7 flex flex-col h-full">
+          <h3 class="text-xl font-bold text-slate-800">Interior Mobil</h3>
+          <p class="text-slate-600 mt-2">
+            Jok, karpet, dan dashboard bersih untuk kenyamanan berkendara.
+          </p>
+          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+            Lihat detail →
+          </span>
         </div>
-
-        <h3 class="text-xl font-bold text-slate-800">
-          Interior Mobil
-        </h3>
-
-        <p class="text-slate-600 mt-2">
-          Jok, karpet, dan dashboard bersih untuk kenyamanan berkendara.
-        </p>
-
-        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-          Lihat detail →
-        </span>
       </a>
 
     </div>
   </div>
 </section>
+
+
 
 
 <!-- Bersih & Nyaman dengan 1 Klik -->
@@ -333,7 +299,7 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
             <!-- Card 1 -->
-            <div class="rounded-2xl p-6 text-white bg-[#3db4c2] shadow-lg relative overflow-hidden">
+            <div class="rounded-2xl p-6 text-white bg-[#20cfff] shadow-lg relative overflow-hidden">
                 <h3 class="text-xl font-bold mb-3">Tersebar Luas di Indonesia</h3>
                 <p class="text-white/90 text-sm leading-relaxed">
                     Hadir di Jakarta, Tangerang, Depok, Bekasi, Bogor, Bandung, Medan, Surabaya, dan Denpasar.
@@ -341,8 +307,8 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="rounded-2xl p-6 text-white bg-[#ff9800] shadow-lg relative overflow-hidden">
-                <h3 class="text-xl font-bold mb-3">Bisa Pilih Helper Sesuka Kamu</h3>
+            <div class="rounded-2xl p-6 text-white bg-[#ffab2d] shadow-lg relative overflow-hidden">
+                <h3 class="text-xl font-bold mb-3">Bisa Pilih bantu Sesuka Kamu</h3>
                 <p class="text-white/90 text-sm leading-relaxed">
                     Sistem prepaid memungkinkan kamu memilih helper favorit dengan tenang dan nyaman.
                 </p>
@@ -390,7 +356,7 @@
         <!-- Step -->
         <div class="text-white">
             <h2 class="text-3xl md:text-4xl font-extrabold mb-8">
-                Cara Memesan Layanan di <span class="text-yellow-300">AshaClean</span>
+                Cara Memesan Layanan di <span class="text-white-300">AshaClean</span>
             </h2>
 
             <div class="space-y-6">
@@ -540,9 +506,7 @@
                 >
 
                 <p class="text-slate-600 leading-relaxed text-center">
-                    “I finally did something that will save my marriage! 
-                    I hired a part time cleaner from AshaClean. Very professional, fast,
-                    and did a really good job at cleaning.”
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia magnam nam a dolorum optio, dicta cumque at aliquid officiis deserunt illo eveniet alias dolorem voluptates, nobis voluptatum soluta ea nemo.
                 </p>
 
                 <p class="mt-5 text-center font-semibold text-slate-800">
@@ -568,9 +532,7 @@
                 >
 
                 <p class="text-slate-600 leading-relaxed text-center">
-                    “I’ve worked with many helpers before, but AshaClean’s
-                    training system makes the quality very consistent.
-                    Highly recommended!”
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptas sunt dicta tempore! Ab porro mollitia, adipisci voluptas placeat tempore cumque? Tempora doloribus tempore iste at beatae eius nihil est.
                 </p>
 
                 <p class="mt-5 text-center font-semibold text-slate-800">
@@ -596,9 +558,7 @@
                 >
 
                 <p class="text-slate-600 leading-relaxed text-center">
-                    “No housework means more time for work!
-                    Thank you AshaClean for making my house
-                    squeaky clean every week!”
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto delectus quam quisquam, repudiandae sint nam eaque laborum sequi quo? Reiciendis maxime sapiente molestias? Provident, vero! Nemo maiores consequatur debitis temporibus!
                 </p>
 
                 <p class="mt-5 text-center font-semibold text-slate-800">
