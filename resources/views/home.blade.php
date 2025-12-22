@@ -10,49 +10,62 @@
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
     <div>
       <span class="inline-block px-3 py-1 rounded-full bg-[#E8FFF6] text-[#20cfff] border border-[#20cfff] text-sm font-medium">
-        Trusted by busy homes & offices
+        Dipercaya oleh rumah & kantor yang sibuk
       </span>
 
       <h1 class="mt-5 text-4xl md:text-5xl font-extrabold text-slate-900">
-        Professional Cleaning Service You Can Trust —
+        Layanan Kebersihan Profesional yang Bisa Anda Percaya —
         <span class="text-[#20cfff]">Asha Clean</span>
       </h1>
 
       <p class="mt-4 text-lg text-slate-600">
-        Sparkling spaces without the stress. Friendly, vetted professionals. Flexible scheduling. Clear pricing. Guaranteed satisfaction.
+        Ruangan bersih dan nyaman tanpa ribet. Tenaga kebersihan ramah dan berpengalaman.
+        Jadwal fleksibel, harga transparan, dan kepuasan terjamin.
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3">
         <a href="/booking" class="bg-[#20cfff] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#006eb7]">
-          Book Now
+          Pesan Sekarang
         </a>
         <a href="/services" class="px-6 py-3 rounded-lg font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50">
-          Get a Quote
+          Lihat Layanan
         </a>
       </div>
 
-      <div class="mt-6 flex items-center gap-4 text-sm text-slate-500">
-        <div class="flex -space-x-2">
-          <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d" class="w-8 h-8 rounded-full border-2 border-white">
-          <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6" class="w-8 h-8 rounded-full border-2 border-white">
-          <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c" class="w-8 h-8 rounded-full border-2 border-white">
-        </div>
-        <p><span class="font-semibold text-slate-700">1,200+ happy clients</span> across homes and offices</p>
-      </div>
-    </div>
 
-    <div>
-      <div class="relative">
-        <img class="rounded-2xl shadow-2xl ring-1 ring-black/5"
-          src="https://images.unsplash.com/photo-1581578731548-c64695cc6952" alt="Clean living room" />
-        <div class="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 ring-1 ring-black/5">
-          <p class="text-sm font-semibold text-slate-700">Same-day slots available</p>
-          <p class="text-xs text-slate-500">Morning, afternoon, and evening</p>
-        </div>
-      </div>
+      <div class="mt-6 flex items-center gap-4 text-sm text-slate-500">
+  <div class="flex -space-x-2">
+    <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d" class="w-8 h-8 rounded-full border-2 border-white">
+    <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6" class="w-8 h-8 rounded-full border-2 border-white">
+    <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c" class="w-8 h-8 rounded-full border-2 border-white">
+  </div>
+  <p>
+    <span class="font-semibold text-slate-700">1.200+ pelanggan puas</span>
+    dari rumah dan perkantoran
+  </p>
+</div>
+</div>
+
+<div>
+  <div class="relative">
+    <img
+      class="rounded-2xl shadow-2xl ring-1 ring-black/5 block"
+      src="{{ asset('images/foto_utama.png') }}"
+      alt="layanan kebersihan profesional"
+    />
+    <div class="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 ring-1 ring-black/5">
+      <p class="text-sm font-semibold text-slate-700">
+        Tersedia layanan di hari yang sama
+      </p>
+      <p class="text-xs text-slate-500">
+        Pagi, siang, dan malam
+      </p>
     </div>
   </div>
+</div>
+</div>
 </section>
+
 
 <!-- SERVICES -->
 <section class="py-20 bg-white">
@@ -75,7 +88,7 @@
       <a href="{{ url('/services/cuci-springbed') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="https://source.unsplash.com/600x400/?mattress,cleaning&sig=1"
+        <img src="{{ asset('images/services1.png') }}"
              alt="Cuci Kasur"
              class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
@@ -94,7 +107,7 @@
       <a href="{{ route('services.sofa') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="https://source.unsplash.com/600x400/?sofa,cleaning&sig=2"
+        <img src="{{ asset('images/services2.png') }}"
              alt="Cuci Sofa"
              class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
@@ -113,7 +126,7 @@
       <a href="{{ route('services.karpet') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="https://source.unsplash.com/600x400/?carpet,curtain,cleaning&sig=3"
+        <img src="{{ asset('images/services3.png') }}"
              alt="Cuci Karpet"
              class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
@@ -132,7 +145,7 @@
       <a href="{{ route('services.baby') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="https://source.unsplash.com/600x400/?baby,toys,cleaning&sig=4"
+        <img src="{{ asset('images/services4.png') }}"
              alt="Baby Care Cleaning"
              class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
@@ -151,7 +164,7 @@
       <a href="{{ route('services.general') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="https://source.unsplash.com/600x400/?house,cleaning,team&sig=5"
+        <img src="{{ asset('images/services5.png') }}"
              alt="General Cleaning"
              class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
@@ -170,7 +183,7 @@
       <a href="{{ route('services.mobil') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="https://source.unsplash.com/600x400/?car,interior,cleaning&sig=6"
+        <img src="{{ asset('images/services6.png') }}"
              alt="Interior Mobil"
              class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
