@@ -2,91 +2,89 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceController; // Untuk Admin CRUD
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ServicePageController;
-
 
 /*
 |--------------------------------------------------------------------------
 | PAGE (STATIC)
 |--------------------------------------------------------------------------
 */
-Route::get('/', [PageController::class, 'home']);
+Route::get('/', [PageController::class, 'home'])->name('home.landing'); // Saya kasih nama biar aman
+Route::get('/services', [PageController::class, 'services'])->name('services.index');
 
-Route::get('/services', [PageController::class, 'services']);
+/*
+|--------------------------------------------------------------------------
+| SERVICES DYNAMIC (BAGIAN PENTING)
+|--------------------------------------------------------------------------
+| Ini adalah "Jalur Utama". Apapun slug yang diketik (misal: /services/cuci-sofa),
+| akan ditangkap oleh controller ini dan dicari di database.
+| SAYA HAPUS redirect manual di bawahnya karena itu yang bikin error 404.
+*/
+Route::get('/services/{slug}', [PageController::class, 'serviceDetail'])
+    ->name('services.show');
 
 
-
+/*
+|--------------------------------------------------------------------------
+| PEMESANAN (BOOKING)
+|--------------------------------------------------------------------------
+*/
 Route::get('/pesan/{service}', [PesanController::class, 'index'])
     ->name('pesan.index');
 
 Route::post('/pesan/submit', [PesanController::class, 'submit'])
     ->name('pesan.submit');
 
+
+/*
+|--------------------------------------------------------------------------
+| AUTHENTICATION
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
+// Halaman Home setelah login
 Route::get('/home', function () {
     return view('home');
 })->middleware('auth')->name('home');
+
+// profile
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });
+
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
+
+Route::get('/forgot-password', function () {
+    return 'Forgot password page not implemented yet';
+})->name('password.request');
 
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN
+| ADMIN DASHBOARD & CRUD
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+        
+        // Dashboard Admin
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
+
+        // CRUD Services (Agar kamu bisa edit layanan lewat admin)
+        // Ini otomatis bikin route: admin.services.index, create, store, edit, dll.
+        Route::resource('services', ServiceController::class);
     });
-
-/*
-|--------------------------------------------------------------------------
-| REGISTER
-|--------------------------------------------------------------------------
-*/
-Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
-
-/*
-|--------------------------------------------------------------------------
-| DUMMY
-|--------------------------------------------------------------------------
-*/
-Route::get('/forgot-password', function () {
-    return 'Forgot password page not implemented yet';
-})->name('password.request');
-
-
-// ini services
-
-Route::get('/services/{slug}', [PageController::class, 'serviceDetail'])
-    ->name('services.show');
-
-Route::get('/services/sofa', fn () => redirect('/services/cuci-sofa-kain'))
-    ->name('services.sofa');
-
-Route::get('/services/karpet', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
-    ->name('services.karpet');
-
-Route::get('/services/baby', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
-    ->name('services.baby');
-
-Route::get('/services/general', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
-    ->name('services.general');
-
-Route::get('/services/mobil', fn () => redirect('/services/cuci-sofa-kasur-karpet'))
-    ->name('services.mobil');

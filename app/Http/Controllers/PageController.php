@@ -11,12 +11,17 @@ class PageController extends Controller
         return view('home');
     }
 
-    public function serviceDetail($slug)
-{
-    $service = ServicePage::with('tools')
-        ->where('slug', $slug)
-        ->firstOrFail();
+    public function serviceDetail($slug) // Parameternya wajib $slug
+    {
+        // Debugging: Cek dulu apakah slug ketangkap
+        // dd($slug); 
 
-    return view('services.show', compact('service'));
-}
+        // CARA BENAR: Cari data berdasarkan kolom 'slug', bukan ID
+        $service = ServicePage::where('slug', $slug)->firstOrFail();
+
+        // Oper data ke View
+        return view('services.detail', compact('service'));
+    }
+
+
 }

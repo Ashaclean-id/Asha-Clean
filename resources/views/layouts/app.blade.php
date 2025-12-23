@@ -24,13 +24,17 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
 
-            <!-- LOGO -->
             <a href="/" class="flex items-center gap-2">
-                <div class="w-9 h-9 rounded-xl bg-[#20cfff] text-white font-bold grid place-items-center">A</div>
-                <span class="font-extrabold text-xl text-slate-800">
-                    Asha <span class="text-[#11d3ff]">Clean</span>
-                </span>
+                <img 
+                    src="{{ asset('images/logo-ashaclean.png') }}" 
+                    alt="Asha Clean Logo"
+                    class="h-9 w-auto object-contain"
+                >
             </a>
+            <span class="text-lg font-semibold">
+                <span class="text-[#20cfff]">Asha</span>
+                <span class="text-gray-800">Clean</span>
+            </span>
 
             <!-- MENU DESKTOP -->
             <nav class="hidden md:flex items-center gap-6 ml-auto">

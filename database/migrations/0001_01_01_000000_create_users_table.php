@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
+            // --- INI LOGIKA ROLE DARI FILE V2 KAMU, SUDAH SAYA PINDAHKAN KESINI ---
+            // Kita pakai enum supaya isinya pasti cuma 'user' atau 'admin'
+            // Defaultnya 'user', jadi kalau daftar biasa otomatis jadi user.
+            $table->enum('role', ['user', 'admin'])->default('user');
+            // ----------------------------------------------------------------------
+            
             $table->rememberToken();
             $table->timestamps();
         });

@@ -85,7 +85,7 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
       <!-- 1. Cuci Kasur & Springbed -->
-      <a href="{{ url('/services/cuci-springbed') }}"
+      <a href="{{ route('services.show', 'cuci-springbed') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
         <img src="{{ asset('images/services1.png') }}"
@@ -104,26 +104,26 @@
       </a>
 
       <!-- 2. Cuci Sofa & Kursi -->
-      <a href="{{ route('services.sofa') }}"
-         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
+      <a href="{{ route('services.show', 'cuci-sofa') }}"
+   class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="{{ asset('images/services2.png') }}"
-             alt="Cuci Sofa"
-             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+    <img src="{{ asset('images/services2.png') }}"
+         alt="Cuci Sofa"
+         class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
-        <div class="p-7 flex flex-col h-full">
-          <h3 class="text-xl font-bold text-slate-800">Cuci Sofa & Kursi</h3>
-          <p class="text-slate-600 mt-2">
+    <div class="p-7 flex flex-col h-full">
+        <h3 class="text-xl font-bold text-slate-800">Cuci Sofa & Kursi</h3>
+        <p class="text-slate-600 mt-2">
             Aman untuk kain, kulit, dan artificial. Warna tetap terjaga.
-          </p>
-          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+        </p>
+        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
             Lihat detail →
-          </span>
-        </div>
-      </a>
+        </span>
+    </div>
+</a>
 
       <!-- 3. Karpet & Gorden -->
-      <a href="{{ route('services.karpet') }}"
+      <a href="{{ route('services.show', 'cuci-karpet') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
         <img src="{{ asset('images/services3.png') }}"
@@ -142,7 +142,7 @@
       </a>
 
       <!-- 4. Baby Care Cleaning -->
-      <a href="{{ route('services.baby') }}"
+      <a href="{{ route('services.show', 'baby-care') }}"
          class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
         <img src="{{ asset('images/services4.png') }}"
@@ -161,42 +161,42 @@
       </a>
 
       <!-- 5. General Cleaning -->
-      <a href="{{ route('services.general') }}"
-         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
+      <a href="{{ route('services.show', 'general-cleaning') }}"
+   class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="{{ asset('images/services5.png') }}"
-             alt="General Cleaning"
-             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+   <img src="{{ asset('images/services5.png') }}"
+        alt="General Cleaning"
+        class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
-        <div class="p-7 flex flex-col h-full">
-          <h3 class="text-xl font-bold text-slate-800">General Cleaning</h3>
-          <p class="text-slate-600 mt-2">
-            Pembersihan ruangan menyeluruh sesuai kebutuhan Anda.
-          </p>
-          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-            Lihat detail →
-          </span>
-        </div>
-      </a>
+   <div class="p-7 flex flex-col h-full">
+     <h3 class="text-xl font-bold text-slate-800">General Cleaning</h3>
+     <p class="text-slate-600 mt-2">
+       Pembersihan ruangan menyeluruh sesuai kebutuhan Anda.
+     </p>
+     <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+       Lihat detail →
+     </span>
+   </div>
+</a>
 
       <!-- 6. Interior Mobil -->
-      <a href="{{ route('services.mobil') }}"
-         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
+      <a href="{{ route('services.show', 'interior-mobil') }}"
+   class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
 
-        <img src="{{ asset('images/services6.png') }}"
-             alt="Interior Mobil"
-             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+   <img src="{{ asset('images/services6.png') }}"
+        alt="Interior Mobil"
+        class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
 
-        <div class="p-7 flex flex-col h-full">
-          <h3 class="text-xl font-bold text-slate-800">Interior Mobil</h3>
-          <p class="text-slate-600 mt-2">
-            Jok, karpet, dan dashboard bersih untuk kenyamanan berkendara.
-          </p>
-          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-            Lihat detail →
-          </span>
-        </div>
-      </a>
+   <div class="p-7 flex flex-col h-full">
+     <h3 class="text-xl font-bold text-slate-800">Interior Mobil</h3>
+     <p class="text-slate-600 mt-2">
+       Jok, karpet, dan dashboard bersih untuk kenyamanan berkendara.
+     </p>
+     <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
+       Lihat detail →
+     </span>
+   </div>
+</a>
 
     </div>
   </div>
@@ -349,17 +349,15 @@
 </section>
 
 
-
-
 <!-- Cara Memesan -->
-<section class="py-20 bg-[#72e0ff] relative overflow-hidden mt-10">
+<section class="py-20 bg-[#e3faff] relative overflow-hidden mt-10">
     <div class="max-w-7xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-12 items-center">
 
         <!-- Gambar HP -->
         <div class="flex justify-center">
             <div class="relative w-[300px] md:w-[360px]">
                 <img 
-                    src="/images/mockup-app.png" 
+                    src="/images/mock-up.png" 
                     alt="Mockup App" 
                     class="rounded-3xl shadow-2xl border border-gray-300"
                 >
@@ -367,46 +365,46 @@
         </div>
 
         <!-- Step -->
-        <div class="text-white">
+        <div class="text-slate-800">
             <h2 class="text-3xl md:text-4xl font-extrabold mb-8">
-                Cara Memesan Layanan di <span class="text-white-300">AshaClean</span>
+                Cara Memesan Layanan di <span class="text-slate-800">AshaClean</span>
             </h2>
 
             <div class="space-y-6">
 
                 <!-- Step 1 -->
                 <div class="flex items-start space-x-4">
-                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">1</span>
+                    <span class="bg-white text-[#47899b] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">1</span>
                     <div>
                         <h3 class="text-xl font-bold">Pilih Layanan</h3>
-                        <p class="text-white/90">Pilih layanan sesuai kebutuhanmu.</p>
+                        <p class="text-slate-800">Pilih layanan sesuai kebutuhanmu.</p>
                     </div>
                 </div>
 
                 <!-- Step 2 -->
                 <div class="flex items-start space-x-4">
-                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">2</span>
+                    <span class="bg-white text-[#47899b] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">2</span>
                     <div>
                         <h3 class="text-xl font-bold">Lengkapi Detail Pesanan</h3>
-                        <p class="text-white/90">Isi data diri, durasi, dan jadwalkan pengerjaan.</p>
+                        <p class="text-slate-800">Isi data diri, durasi, dan jadwalkan pengerjaan.</p>
                     </div>
                 </div>
 
                 <!-- Step 3 -->
                 <div class="flex items-start space-x-4">
-                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">3</span>
+                    <span class="bg-white text-[#47899b] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">3</span>
                     <div>
                         <h3 class="text-xl font-bold">Lakukan Pembayaran</h3>
-                        <p class="text-white/90">Pilih metode pembayaran dan selesaikan transaksi.</p>
+                        <p class="text-slate-800">Pilih metode pembayaran dan selesaikan transaksi.</p>
                     </div>
                 </div>
 
                 <!-- Step 4 -->
                 <div class="flex items-start space-x-4">
-                    <span class="bg-white text-[#98e9ff] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">4</span>
+                    <span class="bg-white text-[#47899b] w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">4</span>
                     <div>
                         <h3 class="text-xl font-bold">Helper Siap Membantu!</h3>
-                        <p class="text-white/90">Tim datang sesuai jadwal yang kamu pilih.</p>
+                        <p class="text-slate-800">Tim datang sesuai jadwal yang kamu pilih.</p>
                     </div>
                 </div>
 
@@ -487,7 +485,7 @@
 </section>
 
       <!-- TESTIMONIALS -->
-<section class="py-24 bg-[#eaf6f4]">
+<section class="py-24 bg-[#e3faff]">
     <div class="max-w-7xl mx-auto px-6">
 
         <!-- Heading -->
@@ -619,6 +617,98 @@
 
     </div>
 </section>
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+            {{-- BRAND --}}
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-9 h-9 rounded-full bg-[#20cfff] text-white 
+                                flex items-center justify-center font-bold">
+                        <img 
+                src="{{ asset('images/logo-ashaclean.png') }}" 
+                alt="Asha Clean Logo"
+                class="h-9 w-auto object-contain"
+            >
+                    </div>
+                    <span class="text-lg font-semibold text-gray-800">Asha Clean</span>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Layanan kebersihan profesional untuk rumah dan bisnis Anda.
+                    Praktis, terpercaya, dan berkualitas.
+                </p>
+            </div>
+
+            {{-- MENU --}}
+            <div>
+                <h4 class="font-semibold text-gray-800 mb-3">Menu</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>
+                        <a href="/" class="text-gray-600 hover:text-[#20cfff] transition">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/services" class="text-gray-600 hover:text-[#20cfff] transition">
+                            Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/booking" class="text-gray-600 hover:text-[#20cfff] transition">
+                            Booking
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/faq" class="text-gray-600 hover:text-[#20cfff] transition">
+                            FAQ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            {{-- LAYANAN --}}
+            <div>
+                <h4 class="font-semibold text-gray-800 mb-3">Layanan</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>Deep Clean Rumah</li>
+                    <li>Service AC</li>
+                    <li>General Cleaning</li>
+                    <li>Move In / Move Out</li>
+                </ul>
+            </div>
+
+            {{-- KONTAK --}}
+            <div>
+                <h4 class="font-semibold text-gray-800 mb-3">Kontak</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>📍 Jakarta, Indonesia</li>
+                    <li>📞 0812-3456-7890</li>
+                    <li>✉️ support@ashaclean.id</li>
+                </ul>
+            </div>
+
+        </div>
+
+        {{-- COPYRIGHT --}}
+        <div class="border-t border-gray-200 mt-10 pt-6 flex flex-col md:flex-row 
+                    justify-between items-center text-sm text-gray-500">
+            <p>
+                © {{ date('Y') }} <span class="font-medium text-gray-700">Asha Clean</span>.
+                All rights reserved.
+            </p>
+
+            <div class="flex gap-4 mt-3 md:mt-0">
+                <a href="#" class="hover:text-[#20cfff] transition">Privacy Policy</a>
+                <a href="#" class="hover:text-[#20cfff] transition">Terms</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
 
 
 

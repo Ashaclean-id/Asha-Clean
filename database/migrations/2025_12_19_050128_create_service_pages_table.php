@@ -12,15 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('service_pages', function (Blueprint $table) {
-    $table->id();
-    $table->string('slug')->unique(); // kasur, sofa, dll
-    $table->string('title');
-    $table->text('description')->nullable();
-    $table->string('image')->nullable();
-    $table->timestamps();
-});
+        $table->id();
+        $table->string('title');
+        $table->string('slug')->unique();
+        $table->text('description');
+
+        // PASTIIN INI ADA:
+        $table->decimal('price', 12, 0)->default(0); 
+
+        $table->string('image')->nullable();
+        $table->timestamps();
+    });
 
     }
+
+    
 
     /**
      * Reverse the migrations.
