@@ -51,9 +51,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 // Halaman Home setelah login
-Route::get('/home', function () {
-    return view('home');
-})->middleware('auth')->name('home');
+Route::get('/home', [PageController::class, 'home'])
+    ->middleware(['auth', 'verified']) // Biarkan middleware ini kalau mau halaman ini khusus member
+    ->name('home');
 
 // profile
 Route::middleware(['auth'])->group(function () {
@@ -70,21 +70,22 @@ Route::get('/forgot-password', function () {
 })->name('password.request');
 
 
-/*
-|--------------------------------------------------------------------------
-| ADMIN DASHBOARD & CRUD
-|--------------------------------------------------------------------------
-*/
-Route::middleware(['auth', 'role:admin'])
+// admin
+Route::middleware(['auth', 'role:admin']) // Pastikan middleware-nya benar
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
         
-        // Dashboard Admin
+        // Cek baris ini:
+        // URL: /admin/dashboard
+        // Controller: AdminDashboardController
+        // Method: index
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
 
-        // CRUD Services (Agar kamu bisa edit layanan lewat admin)
-        // Ini otomatis bikin route: admin.services.index, create, store, edit, dll.
         Route::resource('services', ServiceController::class);
+        Route::put('/settings/update', [AdminDashboardController::class, 'updateSettings'])
+            ->name('settings.update');
+            
+        // ... route services lainnya ...
     });

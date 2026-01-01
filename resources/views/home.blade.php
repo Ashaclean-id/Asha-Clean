@@ -5,33 +5,30 @@
 
 <!-- hero -->
 <section class="relative overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-br from-[#98e9ff] via-white to-[#EAF6FF]"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#98e9ff] via-white to-[#EAF6FF]"></div>
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
-    <div>
-      <span class="inline-block px-3 py-1 rounded-full bg-[#E8FFF6] text-[#20cfff] border border-[#20cfff] text-sm font-medium">
-        Dipercaya oleh rumah & kantor yang sibuk
-      </span>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+            <span class="inline-block px-3 py-1 rounded-full bg-[#E8FFF6] text-[#20cfff] border border-[#20cfff] text-sm font-medium">
+                Dipercaya oleh rumah & kantor yang sibuk
+            </span>
 
-      <h1 class="mt-5 text-4xl md:text-5xl font-extrabold text-slate-900">
-        Layanan Kebersihan Profesional yang Bisa Anda Percaya —
-        <span class="text-[#20cfff]">Asha Clean</span>
-      </h1>
+            <h1 class="mt-5 text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
+                {{ $setting->hero_title ?? 'Layanan Kebersihan Profesional' }}
+            </h1>
 
-      <p class="mt-4 text-lg text-slate-600">
-        Ruangan bersih dan nyaman tanpa ribet. Tenaga kebersihan ramah dan berpengalaman.
-        Jadwal fleksibel, harga transparan, dan kepuasan terjamin.
-      </p>
+            <p class="mt-4 text-lg text-slate-600">
+                {{ $setting->hero_description ?? 'Solusi kebersihan terbaik untuk hunian dan kantor Anda. Pesan sekarang dengan mudah.' }}
+            </p>
 
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href="/booking" class="bg-[#20cfff] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#006eb7]">
-          Pesan Sekarang
-        </a>
-        <a href="/services" class="px-6 py-3 rounded-lg font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50">
-          Lihat Layanan
-        </a>
-      </div>
-
+            <div class="mt-6 flex flex-wrap gap-3">
+                <a href="/booking" class="bg-[#20cfff] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#006eb7] transition shadow-lg shadow-blue-200/50">
+                    Pesan Sekarang
+                </a>
+                <a href="#services" class="px-6 py-3 rounded-lg font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">
+                    Lihat Layanan
+                </a>
+            </div>
 
       <div class="mt-6 flex items-center gap-4 text-sm text-slate-500">
   <div class="flex -space-x-2">
@@ -65,6 +62,7 @@
 </div>
 </div>
 </section>
+
 
 
 <!-- SERVICES -->
@@ -202,6 +200,56 @@
   </div>
 </section>
 
+<!-- promo -->
+
+<section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
+    
+    <div class="mb-8 flex items-center gap-3">
+        <div class="h-8 w-1 bg-blue-500 rounded-full"></div>
+        <h2 class="text-2xl font-bold text-slate-800">🔥 Promo Hari Ini</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        @foreach ([
+            ['text' => $setting->promo_1_text, 'image' => $setting->promo_1_image],
+            ['text' => $setting->promo_2_text, 'image' => $setting->promo_2_image],
+            ['text' => $setting->promo_3_text, 'image' => $setting->promo_3_image]
+        ] as $index => $promo)
+
+            @if($promo['text']) 
+                <div class="group relative h-48 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-slate-100">
+                    
+                    @if($promo['image'])
+                        <img src="{{ asset('storage/' . $promo['image']) }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    @else
+                        <div class="absolute inset-0 bg-gradient-to-br from-slate-400 to-slate-600"></div>
+                    @endif
+
+                    <div class="absolute bottom-0 left-0 p-6 w-full">
+                        <span class="inline-block px-2 py-1 mb-2 text-[10px] font-bold uppercase tracking-wider text-white bg-blue-600/80 rounded backdrop-blur-sm">
+                            Promo {{ $index + 1 }}
+                        </span>
+                        <h3 class="text-xl font-bold text-white leading-tight drop-shadow-md">
+                            {{ $promo['text'] }}
+                        </h3>
+                    </div>
+                </div>
+
+            @else
+                <div class="h-48 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                    </svg>
+                    <span class="text-sm font-medium">Slot Kosong</span>
+                </div>
+            @endif
+
+        @endforeach
+
+    </div>
+</section>
 
 
 
@@ -295,7 +343,7 @@
 </section>
 
 <!-- Kenapa Harus KliknClean -->
-<section class="py-20 bg-gradient-to-b from-white to-[#f5fbff]">
+<section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-6">
 
         <!-- Title -->
@@ -709,8 +757,25 @@
     </div>
 </footer>
 
+@if($setting->show_quick_support && $setting->whatsapp_number)
+    
+    <a href="https://wa.me/{{ $setting->whatsapp_number }}?text=Halo%20Admin%20Asha%20Clean,%20saya%20ingin%20bertanya%20tentang%20layanan%20kebersihan..." 
+       target="_blank"
+       class="fixed bottom-8 right-8 z-50 group flex items-center justify-center">
 
+        <div class="absolute right-20 top-1/2 -translate-y-1/2 bg-white px-4 py-2 rounded-xl shadow-xl border border-slate-100 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none transform translate-x-2 group-hover:translate-x-0">
+            <p class="text-sm font-bold text-slate-700 whitespace-nowrap">Chat Admin Sekarang 👋</p>
+            <div class="absolute top-1/2 -right-2 -translate-y-1/2 w-3 h-3 bg-white transform rotate-45 border-r border-t border-slate-100"></div>
+        </div>
 
+        <div class="relative w-16 h-16 bg-[#25D366] rounded-full shadow-2xl flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:rotate-6">
+            
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#ffffff">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487 2.106.91 2.946.729 3.492.68.618-.055 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+        </div>
+    </a>
 
-
+@endif
 @endsection
