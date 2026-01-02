@@ -12,8 +12,9 @@ class Service extends Model
     // Izinkan semua kolom diisi (mass assignment)
     protected $guarded = [];
     protected $casts = [
-        'benefits' => 'array', // Casting JSON ke Array
-    ];
+    'benefits' => 'array',
+    'pricelist' => 'array', // <--- TAMBAHKAN INI
+];
 
     // Otomatis generate slug saat membuat layanan baru (Opsional tapi keren)
     public static function boot()

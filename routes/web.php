@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminBookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,3 +77,7 @@ Route::middleware(['auth', 'role:admin'])
         
         Route::put('/settings/update', [AdminDashboardController::class, 'updateSettings'])->name('settings.update');
     });
+
+Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
+Route::put('/bookings/{id}/status', [AdminBookingController::class, 'updateStatus'])->name('admin.bookings.updateStatus');
+Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');

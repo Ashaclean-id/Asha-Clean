@@ -70,6 +70,36 @@
                         {!! nl2br(e($service->full_description)) !!}
                     </div>
                 </div>
+
+                @if(!empty($service->pricelist) && count($service->pricelist) > 0)
+<div class="mt-8">
+    <div class="flex items-center gap-3 mb-4">
+        <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
+        <h3 class="text-xl font-bold text-slate-900">Daftar Harga Lengkap</h3>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-blue-50 px-6 py-3 border-b border-blue-100 flex justify-between items-center">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Jenis Layanan / Ukuran</span>
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Harga</span>
+        </div>
+
+        <div class="divide-y divide-slate-100">
+            @foreach($service->pricelist as $item)
+            <div class="px-6 py-4 flex justify-between items-center hover:bg-slate-50 transition">
+                <span class="text-sm font-medium text-slate-700">{{ $item['name'] }}</span>
+                <span class="text-sm font-bold text-slate-900">Rp {{ number_format($item['price'], 0, ',', '.') }}</span>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    
+    <p class="text-xs text-slate-400 mt-3 flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        Harga dapat berubah sewaktu-waktu tergantung kondisi noda/kesulitan.
+    </p>
+</div>
+@endif
                 
                 @if($service->show_booking)
                 <a href="{{ route('pesan.index', $service->id) }}" class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-blue-200">

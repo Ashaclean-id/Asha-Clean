@@ -41,7 +41,7 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nama Layanan</label>
-                        <input type="text" name="name" value="{{ old('name', $service->name) }}" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700 font-medium" required>
+                        <input type="text" name="name" value="{{ old('name', $service->name) }}" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700 font-bold" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Deskripsi Singkat</label>
@@ -82,6 +82,33 @@
                 <h3 class="font-bold text-slate-800 mb-4">Deskripsi Lengkap</h3>
                 <textarea name="full_description" rows="6" class="w-full p-4 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-600 text-sm leading-relaxed">{{ old('full_description', $service->full_description) }}</textarea>
             </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                <div class="mb-4">
+                    <h3 class="font-bold text-slate-800">Apa yang Anda Dapatkan?</h3>
+                    <p class="text-sm text-slate-500">Poin-poin keunggulan layanan ini (Peralatan, Chemical, Staf, dll).</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    @foreach(range(1, 4) as $i)
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-xs font-bold text-blue-600 uppercase">Poin Keunggulan {{ $i }}</label>
+                            <span class="text-[10px] text-slate-400 font-mono">#{{ $i }}</span>
+                        </div>
+                        
+                        <input type="text" name="benefit_{{ $i }}_title" 
+                               value="{{ old('benefit_'.$i.'_title', $service->benefits[$i-1]['title'] ?? '') }}"
+                               class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-bold mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               placeholder="Judul (ex: Peralatan Lengkap)">
+                        
+                        <textarea name="benefit_{{ $i }}_desc" rows="3" 
+                                  class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                  placeholder="Deskripsi singkat...">{{ old('benefit_'.$i.'_desc', $service->benefits[$i-1]['desc'] ?? '') }}</textarea>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
             
         </div>
 
@@ -102,13 +129,39 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Durasi</label>
-                            <input type="text" name="duration" value="{{ old('duration', $service->duration) }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" name="duration" value="{{ old('duration', $service->duration) }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" placeholder="2 - 4 Jam">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Jml Tim</label>
-                            <input type="number" name="team_size" value="{{ old('team_size', $service->team_size) }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="number" name="team_size" value="{{ old('team_size', $service->team_size) }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                <h3 class="font-bold text-slate-800 mb-2">Daftar Harga Lengkap</h3>
+                <p class="text-[10px] text-slate-400 mb-4">Isi variasi harga. Kosongkan jika tidak perlu.</p>
+
+                <div class="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                    @foreach(range(1, 10) as $i)
+                    <div class="flex gap-2 items-center">
+                        <span class="text-[10px] font-bold text-slate-400 w-4 text-center">{{ $i }}.</span>
+                        
+                        <input type="text" name="price_name_{{ $i }}" 
+                               value="{{ old('price_name_'.$i, $service->pricelist[$i-1]['name'] ?? '') }}"
+                               class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                               placeholder="Item">
+                        
+                        <div class="relative w-32 shrink-0">
+                            <span class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">Rp</span>
+                            <input type="number" name="price_value_{{ $i }}" 
+                                   value="{{ old('price_value_'.$i, $service->pricelist[$i-1]['price'] ?? '') }}"
+                                   class="w-full pl-7 pr-2 py-2 border border-slate-300 rounded-lg text-xs font-bold text-right focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   placeholder="0">
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -140,5 +193,21 @@
         </div>
     </div>
 </form>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9; 
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1; 
+        border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8; 
+    }
+</style>
 
 @endsection
