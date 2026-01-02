@@ -63,47 +63,49 @@
 </div>
 </section>
 
-
-
 <!-- SERVICES -->
 <section class="py-20 bg-white">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="max-w-7xl mx-auto px-4">
 
-    @foreach($services as $service)
-    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border border-slate-100 group">
-        
-        <div class="relative h-48 overflow-hidden">
-            @if($service->image)
-                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            @else
-                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                </div>
-            @endif
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      @foreach($services as $service)
+      <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition
+                  border border-slate-100 group flex flex-col h-full">
 
-        <div class="p-6">
-            <h3 class="text-xl font-bold text-slate-800 mb-2">{{ $service->name }}</h3>
-            
-            <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                {{ $service->short_description }}
-            </p>
+        <!-- IMAGE -->
+        <div class="relative h-56 overflow-hidden">
+    <img src="{{ asset('storage/' . $service->image) }}"
+         class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+</div>
 
-            <div class="flex items-center justify-between mt-auto">
-                <span class="text-blue-600 font-bold text-sm">
-                    Mulai Rp {{ number_format($service->price, 0, ',', '.') }}
-                </span>
+<div class="p-5 flex flex-col flex-1">
+    <h3 class="text-lg font-bold text-slate-800 mb-1 leading-tight">
+        {{ $service->name }}
+    </h3>
 
-                <a href="{{ route('services.show', $service->slug) }}" class="text-sm font-semibold text-slate-700 hover:text-blue-600 flex items-center gap-1 transition">
-                    Lihat detail
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                </a>
-            </div>
-        </div>
+    <p class="text-slate-500 text-sm mb-2 leading-snug line-clamp-2">
+        {{ $service->short_description }}
+    </p>
+
+    <div class="flex items-center justify-between mt-auto">
+        <span class="text-blue-600 font-bold text-sm">
+            Mulai Rp {{ number_format($service->price, 0, ',', '.') }}
+        </span>
+
+        <a href="{{ route('services.show', $service->slug) }}"
+           class="text-sm font-semibold text-slate-700 hover:text-blue-600">
+            Lihat detail →
+        </a>
     </div>
-    @endforeach
+</div>
+        </div>
+      @endforeach
     </div>
+
+  </div>
 </section>
+
+
 
 <!-- promo -->
 
@@ -436,55 +438,77 @@
         </div>
     </div>
 </section>
+    
+<section id="review-preview" class="pt-12 pb-8 bg-[#e3faff]">
+  <div class="max-w-7xl mx-auto px-4">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
 
-    @forelse($reviews as $review)
-    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
-        
-        <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg uppercase">
-                {{ substr($review->name, 0, 1) }}
+      @forelse($reviewsPreview as $review)
+      
+        {{-- 2. KARTU TETAP PUTIH (bg-white) AGAR KONTRAS --}}
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition w-full max-w-md flex flex-col">
+
+          <div class="flex items-center gap-4 mb-3">
+            <div class="w-11 h-11 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold uppercase">
+              {{ substr($review->name, 0, 1) }}
             </div>
+
             <div>
-                <h4 class="font-bold text-slate-800">{{ $review->name }}</h4>
-                <p class="text-xs text-slate-500">
-                    @if($review->service)
-                        Menggunakan Layanan: <span class="text-blue-600 font-bold">{{ $review->service->name }}</span>
-                    @else
-                        Pelanggan Setia
-                    @endif
-                </p>
+              <h4 class="font-semibold text-slate-800 leading-tight">
+                {{ $review->name }}
+              </h4>
+              <p class="text-xs text-slate-500">
+                Menggunakan Layanan:
+                <span class="text-blue-600 font-medium">
+                  {{ $review->service->name ?? 'Pelanggan Setia' }}
+                </span>
+              </p>
             </div>
-        </div>
+          </div>
 
-        <div class="flex text-yellow-400 mb-4">
+          <div class="flex text-yellow-400 mb-2">
             @for($i = 1; $i <= 5; $i++)
-                @if($i <= $review->rating)
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                @else
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-200 fill-current" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                @endif
+              <svg class="h-4 w-4 {{ $i <= $review->rating ? 'fill-current' : 'text-slate-200 fill-current' }}" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
             @endfor
+          </div>
+
+          <p class="text-slate-600 italic text-sm leading-relaxed mt-auto">
+            “{{ $review->content }}”
+          </p>
+
         </div>
 
-        <p class="text-slate-600 italic leading-relaxed">
-            "{{ $review->content }}"
-        </p>
+      @empty
+        {{-- EMPTY STATE JUGA DISESUAIKAN (Bg putih transparan agar bagus di biru) --}}
+        <div class="col-span-full text-center py-8 bg-white/10 rounded-2xl border border-dashed border-white/30 w-full max-w-xl mx-auto">
+            <p class="text-white font-medium">Belum ada ulasan</p>
+            <p class="text-sm text-blue-100">Jadilah yang pertama memberikan ulasan!</p>
+        </div>
+      @endforelse
 
     </div>
-    @empty
-    <div class="col-span-full text-center py-10 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
-        <p class="text-slate-500">Belum ada ulasan yang ditampilkan.</p>
-        <p class="text-sm text-slate-400">Jadilah yang pertama memberikan ulasan!</p>
-    </div>
-    @endforelse
+
+    @if($reviewsAll->count() > 3)
+      <div class="flex justify-end mt-4 px-1">
+        {{-- 3. LINK MENJADI PUTIH (text-white) SUPAYA KELIHATAN --}}
+        <a href="#all-reviews" 
+           class="group inline-flex items-center gap-1 text-white font-semibold text-sm hover:text-blue-100 transition-colors">
+          Lihat Ulasan Lainnya
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
+               class="w-4 h-4 transform group-hover:translate-x-1 transition-transform">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    @endif
+
+  </div>
 
 </div>
+
         <!-- CTA REVIEW -->
         <section class="py-16">
           <div class="max-w-4xl mx-auto px-4 text-center">
@@ -506,14 +530,13 @@
             Login untuk Memberi Ulasan
         </a>
     @else
-        <a href="{{ route('reviews.create') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+        <a href="{{ route('reviews.create') }}" class="inline-block px-6 py-3 bg-[#20cfff] text-white font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
             Tulis Pengalaman Anda
         </a>
     @endauth
 </div>
-
-          </div>
-        </section>
+</div>
+</section>
 
     </div>
 </section>
