@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\ServiceController; // Untuk Admin CRUD
+use App\Http\Controllers\ServiceController; 
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -14,18 +14,17 @@ use App\Http\Controllers\ProfileController;
 | PAGE (STATIC)
 |--------------------------------------------------------------------------
 */
-Route::get('/', [PageController::class, 'home'])->name('home.landing'); // Saya kasih nama biar aman
+Route::get('/', [PageController::class, 'home'])->name('home.landing');
 Route::get('/services', [PageController::class, 'services'])->name('services.index');
 
 /*
 |--------------------------------------------------------------------------
-| SERVICES DYNAMIC (BAGIAN PENTING)
+| SERVICES DYNAMIC (PUBLIC)
 |--------------------------------------------------------------------------
-| Ini adalah "Jalur Utama". Apapun slug yang diketik (misal: /services/cuci-sofa),
-| akan ditangkap oleh controller ini dan dicari di database.
-| SAYA HAPUS redirect manual di bawahnya karena itu yang bikin error 404.
+| PENTING: Kita pakai ServiceController::show di sini agar nyambung
+| dengan logika database yang baru kita buat.
 */
-Route::get('/services/{slug}', [PageController::class, 'serviceDetail'])
+Route::get('/services/{slug}', [ServiceController::class, 'show']) // <--- INI SAYA GANTI
     ->name('services.show');
 
 
@@ -34,11 +33,8 @@ Route::get('/services/{slug}', [PageController::class, 'serviceDetail'])
 | PEMESANAN (BOOKING)
 |--------------------------------------------------------------------------
 */
-Route::get('/pesan/{service}', [PesanController::class, 'index'])
-    ->name('pesan.index');
-
-Route::post('/pesan/submit', [PesanController::class, 'submit'])
-    ->name('pesan.submit');
+Route::get('/pesan/{service}', [PesanController::class, 'index'])->name('pesan.index');
+Route::post('/pesan/submit', [PesanController::class, 'submit'])->name('pesan.submit');
 
 
 /*
@@ -49,13 +45,9 @@ Route::post('/pesan/submit', [PesanController::class, 'submit'])
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/home', [PageController::class, 'home'])->middleware(['auth', 'verified'])->name('home');
 
-// Halaman Home setelah login
-Route::get('/home', [PageController::class, 'home'])
-    ->middleware(['auth', 'verified']) // Biarkan middleware ini kalau mau halaman ini khusus member
-    ->name('home');
-
-// profile
+// Profile & Register
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -64,28 +56,23 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
-
-Route::get('/forgot-password', function () {
-    return 'Forgot password page not implemented yet';
-})->name('password.request');
+Route::get('/forgot-password', function () { return 'Forgot password page not implemented yet'; })->name('password.request');
 
 
-// admin
-Route::middleware(['auth', 'role:admin']) // Pastikan middleware-nya benar
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:admin']) 
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
         
-        // Cek baris ini:
-        // URL: /admin/dashboard
-        // Controller: AdminDashboardController
-        // Method: index
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-            ->name('dashboard');
-
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        
+        // Ini Route CRUD yang nyambung ke ServiceController bagian Admin
         Route::resource('services', ServiceController::class);
-        Route::put('/settings/update', [AdminDashboardController::class, 'updateSettings'])
-            ->name('settings.update');
-            
-        // ... route services lainnya ...
+        
+        Route::put('/settings/update', [AdminDashboardController::class, 'updateSettings'])->name('settings.update');
     });

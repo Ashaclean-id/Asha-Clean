@@ -67,137 +67,42 @@
 
 <!-- SERVICES -->
 <section class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-    <!-- Heading -->
-    <div class="text-center mb-14">
-      <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">
-        Layanan Kami
-      </h2>
-      <p class="mt-3 text-slate-600 max-w-2xl mx-auto">
-        Berbagai layanan kebersihan profesional untuk rumah, kantor, dan kendaraan Anda.
-      </p>
-    </div>
-
-    <!-- Service Cards -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- 1. Cuci Kasur & Springbed -->
-      <a href="{{ route('services.show', 'cuci-springbed') }}"
-         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
-
-        <img src="{{ asset('images/services1.png') }}"
-             alt="Cuci Kasur"
-             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
-
-        <div class="p-7 flex flex-col h-full">
-          <h3 class="text-xl font-bold text-slate-800">Cuci Kasur & Springbed</h3>
-          <p class="text-slate-600 mt-2">
-            Bebas tungau, bakteri, dan bau tidak sedap dengan deep cleaning profesional.
-          </p>
-          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-            Lihat detail →
-          </span>
+    @foreach($services as $service)
+    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border border-slate-100 group">
+        
+        <div class="relative h-48 overflow-hidden">
+            @if($service->image)
+                <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            @else
+                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                </div>
+            @endif
         </div>
-      </a>
 
-      <!-- 2. Cuci Sofa & Kursi -->
-      <a href="{{ route('services.show', 'cuci-sofa') }}"
-   class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
+        <div class="p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-2">{{ $service->name }}</h3>
+            
+            <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                {{ $service->short_description }}
+            </p>
 
-    <img src="{{ asset('images/services2.png') }}"
-         alt="Cuci Sofa"
-         class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
+            <div class="flex items-center justify-between mt-auto">
+                <span class="text-blue-600 font-bold text-sm">
+                    Mulai Rp {{ number_format($service->price, 0, ',', '.') }}
+                </span>
 
-    <div class="p-7 flex flex-col h-full">
-        <h3 class="text-xl font-bold text-slate-800">Cuci Sofa & Kursi</h3>
-        <p class="text-slate-600 mt-2">
-            Aman untuk kain, kulit, dan artificial. Warna tetap terjaga.
-        </p>
-        <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-            Lihat detail →
-        </span>
-    </div>
-</a>
-
-      <!-- 3. Karpet & Gorden -->
-      <a href="{{ route('services.show', 'cuci-karpet') }}"
-         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
-
-        <img src="{{ asset('images/services3.png') }}"
-             alt="Cuci Karpet"
-             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
-
-        <div class="p-7 flex flex-col h-full">
-          <h3 class="text-xl font-bold text-slate-800">Karpet & Gorden</h3>
-          <p class="text-slate-600 mt-2">
-            Cuci bersih karpet dan gorden untuk udara ruangan yang lebih sehat.
-          </p>
-          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-            Lihat detail →
-          </span>
+                <a href="{{ route('services.show', $service->slug) }}" class="text-sm font-semibold text-slate-700 hover:text-blue-600 flex items-center gap-1 transition">
+                    Lihat detail
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </a>
+            </div>
         </div>
-      </a>
-
-      <!-- 4. Baby Care Cleaning -->
-      <a href="{{ route('services.show', 'baby-care') }}"
-         class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
-
-        <img src="{{ asset('images/services4.png') }}"
-             alt="Baby Care Cleaning"
-             class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
-
-        <div class="p-7 flex flex-col h-full">
-          <h3 class="text-xl font-bold text-slate-800">Baby Care Cleaning</h3>
-          <p class="text-slate-600 mt-2">
-            Layanan khusus perlengkapan bayi dengan cairan aman & non-toxic.
-          </p>
-          <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-            Lihat detail →
-          </span>
-        </div>
-      </a>
-
-      <!-- 5. General Cleaning -->
-      <a href="{{ route('services.show', 'general-cleaning') }}"
-   class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
-
-   <img src="{{ asset('images/services5.png') }}"
-        alt="General Cleaning"
-        class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
-
-   <div class="p-7 flex flex-col h-full">
-     <h3 class="text-xl font-bold text-slate-800">General Cleaning</h3>
-     <p class="text-slate-600 mt-2">
-       Pembersihan ruangan menyeluruh sesuai kebutuhan Anda.
-     </p>
-     <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-       Lihat detail →
-     </span>
-   </div>
-</a>
-
-      <!-- 6. Interior Mobil -->
-      <a href="{{ route('services.show', 'interior-mobil') }}"
-   class="group bg-white border rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden flex flex-col">
-
-   <img src="{{ asset('images/services6.png') }}"
-        alt="Interior Mobil"
-        class="h-44 w-full object-cover group-hover:scale-105 transition duration-300">
-
-   <div class="p-7 flex flex-col h-full">
-     <h3 class="text-xl font-bold text-slate-800">Interior Mobil</h3>
-     <p class="text-slate-600 mt-2">
-       Jok, karpet, dan dashboard bersih untuk kenyamanan berkendara.
-     </p>
-     <span class="mt-auto text-sm font-semibold text-blue-600 group-hover:underline">
-       Lihat detail →
-     </span>
-   </div>
-</a>
-
     </div>
-  </div>
+    @endforeach
+    </div>
 </section>
 
 <!-- promo -->

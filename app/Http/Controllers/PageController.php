@@ -3,30 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LandingSetting; // <--- Pastikan Model ini dipanggil
+use App\Models\LandingSetting; 
+use App\Models\Service;        
 
 class PageController extends Controller
 {
     /**
-     * Menampilkan Halaman Depan (Landing Page)
+     * Halaman Home (Landing Page)
      */
     public function home()
     {
-        // 1. Ambil data pengaturan dari database (Hero, Promo, Ulasan)
         $setting = LandingSetting::first();
-
-        // 2. Jaga-jaga jika database masih kosong (supaya tidak error di view)
         if (!$setting) {
-            $setting = new LandingSetting(); // Buat objek kosong dummy
-            // Set nilai default supaya tampilan tidak rusak
+            $setting = new LandingSetting(); 
             $setting->hero_title = 'Layanan Kebersihan Profesional';
             $setting->hero_description = 'Deskripsi default sistem...';
             $setting->show_ulasan = true;
         }
 
-        // 3. Kirim data $setting ke view 'home'
-        // Dengan ini, view 'home' bisa pakai variabel $setting->hero_title, dll.
-        return view('home', compact('setting'));
+        $services = Service::where('is_active', 1)->get();
+
+        return view('home', compact('setting', 'services'));
     }
-    
+
+    /**
+     * Halaman Daftar Layanan (Public)
+     * Ini yang bikin error tadi karena sebelumnya tidak ada.
+     */
+    public function services()
+    {
+        // Ambil semua layanan aktif
+        $services = Service::where('is_active', 1)->get();
+        
+        // Ambil setting untuk header/footer
+        $setting = LandingSetting::first();
+
+        // Kita tampilkan di view 'services.index' (Nanti kita buat filenya)
+        // Kalau filenya belum ada, sementara kita arahkan ke 'home' dulu biar tidak error
+        return view('home', compact('services', 'setting')); 
+    }
+
+    /**
+     * Halaman Detail Layanan
+     */
+    // ... method serviceDetail atau show (jika ada) ...
 }
