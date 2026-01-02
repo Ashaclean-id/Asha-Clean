@@ -31,14 +31,12 @@ Route::get('/services/{slug}', [ServiceController::class, 'show']) // <--- INI S
     ->name('services.show');
 
 
-/*
-|--------------------------------------------------------------------------
-| PEMESANAN (BOOKING)
-|--------------------------------------------------------------------------
-*/
-Route::get('/pesan/{service}', [PesanController::class, 'index'])->name('pesan.index');
-Route::post('/pesan/submit', [PesanController::class, 'submit'])->name('pesan.submit');
+// Route Form Pesan
+Route::get('/pesan/{id}', [PesanController::class, 'index'])->name('pesan.index');
+Route::post('/pesan', [PesanController::class, 'submit'])->name('pesan.submit');
 
+// BARU: Route Halaman Bayar
+Route::get('/pembayaran/{id}', [PesanController::class, 'payment'])->name('pesan.payment');
 
 /*
 |--------------------------------------------------------------------------
