@@ -60,9 +60,8 @@
             
             // 1. Jika Sukses Bayar
             onSuccess: function(result){
-                alert("Pembayaran Berhasil!");
-                window.location.href = "{{ route('home.landing') }}"; 
-                // Nanti bisa diarahkan ke halaman 'Thank You' khusus
+                // Redirect ke halaman Nota Sukses
+                window.location.href = "{{ route('booking.success', $booking->id) }}";
             },
             
             // 2. Jika Pending (Misal: User pilih Indomaret tapi belum bayar)

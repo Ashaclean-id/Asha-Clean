@@ -96,3 +96,6 @@ Route::middleware(['auth'])->group(function () {
 
     // ... route profile dll ...
 });
+
+// Route Sukses Bayar (Nota)
+Route::get('/booking/{id}/success', [PesanController::class, 'success'])->name('booking.success');

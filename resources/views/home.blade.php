@@ -484,8 +484,8 @@
       @empty
         {{-- EMPTY STATE JUGA DISESUAIKAN (Bg putih transparan agar bagus di biru) --}}
         <div class="col-span-full text-center py-8 bg-white/10 rounded-2xl border border-dashed border-white/30 w-full max-w-xl mx-auto">
-            <p class="text-white font-medium">Belum ada ulasan</p>
-            <p class="text-sm text-blue-100">Jadilah yang pertama memberikan ulasan!</p>
+            <p class="text-slate-600 font-medium">Belum ada ulasan</p>
+            <p class="text-sm text-slate-600">Jadilah yang pertama memberikan ulasan!</p>
         </div>
       @endforelse
 

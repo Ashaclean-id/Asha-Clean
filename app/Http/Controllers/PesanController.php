@@ -104,4 +104,21 @@ class PesanController extends Controller
 
         return view('pesan.payment', compact('booking', 'setting'));
     }
+
+    public function success($id)
+    {
+        $booking = Booking::with('service')->findOrFail($id);
+
+        // UBAH STATUS JADI PAID (LUNAS)
+        // Catatan: Untuk production nanti sebaiknya pakai Webhook Midtrans biar lebih aman
+        if($booking->payment_status == 'unpaid') {
+            $booking->update([
+                'payment_status' => 'paid',
+                'status' => 'approved' // Opsional: langsung approve pesanan
+            ]);
+        }
+
+        $setting = LandingSetting::first();
+        return view('pesan.success', compact('booking', 'setting'));
+    }
 }
