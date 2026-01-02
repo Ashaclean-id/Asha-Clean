@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\LandingSetting; 
-use App\Models\Service;        
+use App\Models\Service;
+use App\Models\Review; // Pastikan Model Review dipanggil
 
 class PageController extends Controller
 {
@@ -13,6 +14,7 @@ class PageController extends Controller
      */
     public function home()
     {
+        // 1. Ambil Setting Website
         $setting = LandingSetting::first();
         if (!$setting) {
             $setting = new LandingSetting(); 
@@ -21,14 +23,23 @@ class PageController extends Controller
             $setting->show_ulasan = true;
         }
 
+        // 2. Ambil Layanan Aktif
         $services = Service::where('is_active', 1)->get();
 
-        return view('home', compact('setting', 'services'));
+        // 3. AMBIL ULASAN (YANG STATUSNYA APPROVED)
+        // Kita ambil 6 ulasan terbaru beserta data servicenya
+        $reviews = Review::with('service')
+                    ->where('status', 'approved')
+                    ->latest()
+                    ->take(6)
+                    ->get();
+
+        // 4. Kirim SEMUA data (setting, services, reviews) ke view 'home' sekaligus
+        return view('home', compact('setting', 'services', 'reviews'));
     }
 
     /**
      * Halaman Daftar Layanan (Public)
-     * Ini yang bikin error tadi karena sebelumnya tidak ada.
      */
     public function services()
     {
@@ -38,13 +49,8 @@ class PageController extends Controller
         // Ambil setting untuk header/footer
         $setting = LandingSetting::first();
 
-        // Kita tampilkan di view 'services.index' (Nanti kita buat filenya)
-        // Kalau filenya belum ada, sementara kita arahkan ke 'home' dulu biar tidak error
+        // Sementara arahkan ke home jika file view 'services.index' belum ada
+        // Jika nanti sudah buat view khusus list layanan, ganti jadi: view('services.index', ...)
         return view('home', compact('services', 'setting')); 
     }
-
-    /**
-     * Halaman Detail Layanan
-     */
-    // ... method serviceDetail atau show (jika ada) ...
 }

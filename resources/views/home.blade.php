@@ -437,105 +437,54 @@
     </div>
 </section>
 
-      <!-- TESTIMONIALS -->
-<section class="py-24 bg-[#e3faff]">
-    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        <!-- Heading -->
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-extrabold text-slate-800">
-                Hear What Our Customers Have To Say
-            </h2>
-            <p class="mt-4 text-slate-600 max-w-3xl mx-auto">
-                Trusted by both local & expat communities, we are rated 
-                <span class="font-semibold text-[#20cfff]">4.7 stars</span> on Google review by over 
-                <span class="font-semibold">2,000+</span> users!
-            </p>
+    @forelse($reviews as $review)
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+        
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg uppercase">
+                {{ substr($review->name, 0, 1) }}
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-800">{{ $review->name }}</h4>
+                <p class="text-xs text-slate-500">
+                    @if($review->service)
+                        Menggunakan Layanan: <span class="text-blue-600 font-bold">{{ $review->service->name }}</span>
+                    @else
+                        Pelanggan Setia
+                    @endif
+                </p>
+            </div>
         </div>
 
-        <!-- Cards -->
-        <div class="grid md:grid-cols-3 gap-10">
-
-            <!-- Card 1 -->
-            <div class="group relative bg-white rounded-2xl shadow-lg p-8 pt-14
-                        transition-all duration-300
-                        hover:-translate-y-2 hover:shadow-2xl hover:bg-[#f7fdff]">
-
-                <img
-                    src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d"
-                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2
-                           border-4 border-white shadow
-                           transition-all duration-300
-                           group-hover:-top-10 group-hover:shadow-lg"
-                >
-
-                <p class="text-slate-600 leading-relaxed text-center">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia magnam nam a dolorum optio, dicta cumque at aliquid officiis deserunt illo eveniet alias dolorem voluptates, nobis voluptatum soluta ea nemo.
-                </p>
-
-                <p class="mt-5 text-center font-semibold text-slate-800">
-                    @midiforreal
-                </p>
-
-                <div class="mt-3 text-center text-yellow-400 transition group-hover:scale-110">
-                    ★★★★★
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="group relative bg-white rounded-2xl shadow-lg p-8 pt-14
-                        transition-all duration-300
-                        hover:-translate-y-2 hover:shadow-2xl hover:bg-[#f7fdff]">
-
-                <img
-                    src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6"
-                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2
-                           border-4 border-white shadow
-                           transition-all duration-300
-                           group-hover:-top-10 group-hover:shadow-lg"
-                >
-
-                <p class="text-slate-600 leading-relaxed text-center">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptas sunt dicta tempore! Ab porro mollitia, adipisci voluptas placeat tempore cumque? Tempora doloribus tempore iste at beatae eius nihil est.
-                </p>
-
-                <p class="mt-5 text-center font-semibold text-slate-800">
-                    @keweitay
-                </p>
-
-                <div class="mt-3 text-center text-yellow-400 transition group-hover:scale-110">
-                    ★★★★★
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="group relative bg-white rounded-2xl shadow-lg p-8 pt-14
-                        transition-all duration-300
-                        hover:-translate-y-2 hover:shadow-2xl hover:bg-[#f7fdff]">
-
-                <img
-                    src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c"
-                    class="w-16 h-16 rounded-full absolute -top-8 left-1/2 -translate-x-1/2
-                           border-4 border-white shadow
-                           transition-all duration-300
-                           group-hover:-top-10 group-hover:shadow-lg"
-                >
-
-                <p class="text-slate-600 leading-relaxed text-center">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto delectus quam quisquam, repudiandae sint nam eaque laborum sequi quo? Reiciendis maxime sapiente molestias? Provident, vero! Nemo maiores consequatur debitis temporibus!
-                </p>
-
-                <p class="mt-5 text-center font-semibold text-slate-800">
-                    @miss_luxe
-                </p>
-
-                <div class="mt-3 text-center text-yellow-400 transition group-hover:scale-110">
-                    ★★★★★
-                </div>
-            </div>
-
+        <div class="flex text-yellow-400 mb-4">
+            @for($i = 1; $i <= 5; $i++)
+                @if($i <= $review->rating)
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-200 fill-current" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                @endif
+            @endfor
         </div>
 
+        <p class="text-slate-600 italic leading-relaxed">
+            "{{ $review->content }}"
+        </p>
+
+    </div>
+    @empty
+    <div class="col-span-full text-center py-10 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+        <p class="text-slate-500">Belum ada ulasan yang ditampilkan.</p>
+        <p class="text-sm text-slate-400">Jadilah yang pertama memberikan ulasan!</p>
+    </div>
+    @endforelse
+
+</div>
         <!-- CTA REVIEW -->
         <section class="py-16">
           <div class="max-w-4xl mx-auto px-4 text-center">
@@ -551,19 +500,17 @@
             </p>
 
             <!-- Input dummy -->
-            <a href="{{ route('login') }}"
-               class="mt-10 block w-full md:w-3/4 mx-auto px-6 py-4 rounded-xl
-                      border border-slate-300 text-slate-500 text-left
-                      hover:border-[#20cfff] hover:ring-2 hover:ring-[#20cfff]/30 transition">
-              Tulis ulasan kamu di sini...
-            </a>
-
-            <!-- Button -->
-            <a href="{{ route('login') }}"
-               class="inline-block mt-6 bg-[#20cfff] text-white px-10 py-3 rounded-xl font-semibold
-                      hover:bg-[#006eb7] transition">
-              Login & Kirim Ulasan
-            </a>
+            <div class="mt-8 text-center">
+    @guest
+        <a href="{{ route('login') }}" class="inline-block px-6 py-3 bg-slate-200 text-slate-700 font-bold rounded-xl hover:bg-slate-300 transition">
+            Login untuk Memberi Ulasan
+        </a>
+    @else
+        <a href="{{ route('reviews.create') }}" class="inline-block px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+            Tulis Pengalaman Anda
+        </a>
+    @endauth
+</div>
 
           </div>
         </section>

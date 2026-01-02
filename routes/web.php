@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminBookingController;
+use App\Http\Controllers\AdminReviewController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +80,21 @@ Route::middleware(['auth', 'role:admin'])
         Route::put('/settings/update', [AdminDashboardController::class, 'updateSettings'])->name('settings.update');
     });
 
+// untuk booking
 Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
 Route::put('/bookings/{id}/status', [AdminBookingController::class, 'updateStatus'])->name('admin.bookings.updateStatus');
 Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');
+
+// untuk ulasan
+Route::get('/reviews', [AdminReviewController::class, 'index'])->name('admin.reviews.index');
+Route::put('/reviews/{id}/status', [AdminReviewController::class, 'updateStatus'])->name('admin.reviews.updateStatus');
+Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+
+Route::middleware(['auth'])->group(function () {
+    
+    // Route Tulis Ulasan
+    Route::get('/write-review', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    // ... route profile dll ...
+});
