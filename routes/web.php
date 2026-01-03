@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\ReviewController;
+use Illuminate\Database\Schema\Blueprint;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +100,4 @@ Route::middleware(['auth'])->group(function () {
 
 // Route Sukses Bayar (Nota)
 Route::get('/booking/{id}/success', [PesanController::class, 'success'])->name('booking.success');
+

@@ -108,7 +108,7 @@
 
 
 <!-- promo -->
-
+@if($setting->show_promotions)
 <section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
     
     <div class="mb-8 flex items-center gap-3">
@@ -157,7 +157,7 @@
 
     </div>
 </section>
-
+@endif
 
 
 <!-- Bersih & Nyaman dengan 1 Klik -->
@@ -438,7 +438,8 @@
         </div>
     </div>
 </section>
-    
+
+@if($setting->show_ulasan)
 <section id="review-preview" class="pt-12 pb-8 bg-[#e3faff]">
   <div class="max-w-7xl mx-auto px-4">
 
@@ -537,8 +538,9 @@
 </div>
 </div>
 </section>
+@endif
 
-    </div>
+</div>
 </section>
 
     <div class="max-w-7xl mx-auto px-6 py-12">

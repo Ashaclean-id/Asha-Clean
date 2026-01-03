@@ -27,4 +27,8 @@ class Service extends Model
             }
         });
     }
+    public function options()
+{
+    return $this->hasMany(ServiceOption::class);
+}
 }

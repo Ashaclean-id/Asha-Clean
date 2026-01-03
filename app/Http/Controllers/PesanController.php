@@ -11,11 +11,15 @@ use Midtrans\Snap;   // Import Midtrans
 
 class PesanController extends Controller
 {
-    public function index($id)
+    public function index(Request $request, $id)
     {
-        $service = Service::where('is_active', 1)->findOrFail($id);
-        $setting = LandingSetting::first();
-        return view('pesan.index', compact('service', 'setting'));
+        $service = Service::with('options')->findOrFail($id);
+        
+        // Tangkap item yang dipilih dari halaman sebelumnya (kalau ada)
+        // Kita kirimkan variabel ini ke View
+        $selectedItems = $request->input('selected_items', []); 
+
+        return view('pesan.index', compact('service', 'selectedItems'));
     }
 
     public function submit(Request $request)
