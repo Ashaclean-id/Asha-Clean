@@ -9,21 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
 {
     Schema::table('services', function (Blueprint $table) {
-        // Kita pakai tipe JSON biar bisa simpan banyak data (Judul & Deskripsi) dalam 1 kolom
-        $table->json('benefits')->nullable(); 
+        // Kita pakai JSON agar bisa menyimpan banyak harga dalam 1 kolom
+        $table->json('pricelist')->nullable()->after('price'); 
     });
 }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('services', function (Blueprint $table) {
-            //
-        });
-    }
+public function down()
+{
+    Schema::table('services', function (Blueprint $table) {
+        $table->dropColumn('pricelist');
+    });
+}
 };

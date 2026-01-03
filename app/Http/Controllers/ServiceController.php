@@ -119,21 +119,21 @@ class ServiceController extends Controller
     {
         $service = Service::findOrFail($id);
         
-        // 1. DAFTAR KOLOM YANG DI-EXCLUDE (SAMA SEPERTI STORE)
-        $excludedFields = ['image'];
-        for ($i = 1; $i <= 4; $i++) {
-            $excludedFields[] = "benefit_{$i}_title";
-            $excludedFields[] = "benefit_{$i}_desc";
-        }
+        // 1. Validasi
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
 
-        // 2. Bersihkan Data
-        $data = $request->except($excludedFields);
+        // 2. AMBIL DATA AWAL (Kecuali token, method, dan image)
+        // Kita tidak pakai except array panjang, tapi kita unset manual nanti.
+        $data = $request->except(['_token', '_method', 'image']);
         
         $data['slug'] = Str::slug($request->name);
-
         $data['is_active'] = $request->has('is_active') ? 1 : 0;
         $data['show_booking'] = $request->has('show_booking') ? 1 : 0;
 
+        // Handle Gambar
         if ($request->hasFile('image')) {
             if ($service->image) {
                 Storage::disk('public')->delete($service->image);
@@ -141,31 +141,43 @@ class ServiceController extends Controller
             $data['image'] = $request->file('image')->store('services', 'public');
         }
 
-        // 3. HANDLE JSON BENEFITS (UPDATE)
+        // 3. HANDLE BENEFITS & BERSIHKAN INPUTNYA
         $benefits = [];
         for ($i = 1; $i <= 4; $i++) {
-            $benefits[] = [
-                'title' => $request->input("benefit_{$i}_title"),
-                'desc'  => $request->input("benefit_{$i}_desc")
-            ];
+            if ($request->filled("benefit_{$i}_title")) {
+                $benefits[] = [
+                    'title' => $request->input("benefit_{$i}_title"),
+                    'desc'  => $request->input("benefit_{$i}_desc")
+                ];
+            }
+            // HARDCORE CLEANING: Hapus langsung dari array $data
+            unset($data["benefit_{$i}_title"]);
+            unset($data["benefit_{$i}_desc"]);
         }
         $data['benefits'] = $benefits;
 
+        // 4. HANDLE PRICELIST & BERSIHKAN INPUTNYA (SOLUSI ERROR KAMU)
+        $pricelist = [];
+        for ($i = 1; $i <= 10; $i++) {
+            // Ambil datanya buat JSON
+            if ($request->filled("price_name_{$i}")) {
+                $pricelist[] = [
+                    'name'  => $request->input("price_name_{$i}"),
+                    'price' => $request->input("price_value_{$i}") ?? 0
+                ];
+            }
+
+            // HARDCORE CLEANING: Paksa hapus key ini dari array $data
+            // Supaya tidak dianggap sebagai nama kolom database
+            unset($data["price_name_$i"]); 
+            unset($data["price_value_$i"]);
+        }
+        $data['pricelist'] = $pricelist;
+
+        // 5. UPDATE DATABASE
+        // Sekarang $data dijamin bersih, cuma berisi kolom asli + pricelist JSON
         $service->update($data);
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diupdate!');
-    }
-
-    public function destroy($id)
-    {
-        $service = Service::findOrFail($id);
-        
-        if ($service->image) {
-            Storage::disk('public')->delete($service->image);
-        }
-        
-        $service->delete();
-
-        return redirect()->route('admin.services.index')->with('success', 'Layanan dihapus!');
     }
 }

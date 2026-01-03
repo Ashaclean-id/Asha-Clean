@@ -25,19 +25,28 @@ Route::get('/services', [PageController::class, 'services'])->name('services.ind
 |--------------------------------------------------------------------------
 | SERVICES DYNAMIC (PUBLIC)
 |--------------------------------------------------------------------------
-| PENTING: Kita pakai ServiceController::show di sini agar nyambung
-| dengan logika database yang baru kita buat.
 */
-Route::get('/services/{slug}', [ServiceController::class, 'show']) // <--- INI SAYA GANTI
-    ->name('services.show');
+Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
 
-// Route Form Pesan
+/*
+|--------------------------------------------------------------------------
+| ORDER / PEMESANAN (PESAN CONTROLLER)
+|--------------------------------------------------------------------------
+*/
+// 1. Form Pesan
 Route::get('/pesan/{id}', [PesanController::class, 'index'])->name('pesan.index');
+
+// 2. Submit Pesanan
 Route::post('/pesan', [PesanController::class, 'submit'])->name('pesan.submit');
 
-// BARU: Route Halaman Bayar
+// 3. Halaman Pembayaran (Midtrans)
 Route::get('/pembayaran/{id}', [PesanController::class, 'payment'])->name('pesan.payment');
+
+// 4. Halaman Sukses Bayar (PERBAIKAN DISINI)
+// Tadi namanya 'booking.success', kita ubah jadi 'pesan.success' biar sinkron
+Route::get('/pembayaran/sukses/{id}', [PesanController::class, 'success'])->name('pesan.success');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -79,25 +88,18 @@ Route::middleware(['auth', 'role:admin'])
         Route::put('/settings/update', [AdminDashboardController::class, 'updateSettings'])->name('settings.update');
     });
 
-// untuk booking
+// untuk booking admin
 Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
 Route::put('/bookings/{id}/status', [AdminBookingController::class, 'updateStatus'])->name('admin.bookings.updateStatus');
 Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');
 
-// untuk ulasan
+// untuk ulasan admin
 Route::get('/reviews', [AdminReviewController::class, 'index'])->name('admin.reviews.index');
 Route::put('/reviews/{id}/status', [AdminReviewController::class, 'updateStatus'])->name('admin.reviews.updateStatus');
 Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy'])->name('admin.reviews.destroy');
 
+// untuk user menulis ulasan
 Route::middleware(['auth'])->group(function () {
-    
-    // Route Tulis Ulasan
     Route::get('/write-review', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
-    // ... route profile dll ...
 });
-
-// Route Sukses Bayar (Nota)
-Route::get('/booking/{id}/success', [PesanController::class, 'success'])->name('booking.success');
-

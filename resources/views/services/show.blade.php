@@ -67,46 +67,58 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                     <h3 class="font-bold text-lg text-slate-800 mb-4">Deskripsi Layanan</h3>
                     <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm">
-                        {!! nl2br(e($service->full_description)) !!}
+                        {!! nl2br(e($service->description ?? $service->full_description)) !!}
                     </div>
                 </div>
 
-                @if(!empty($service->pricelist) && count($service->pricelist) > 0)
-<div class="mt-8">
-    <div class="flex items-center gap-3 mb-4">
-        <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
-        <h3 class="text-xl font-bold text-slate-900">Daftar Harga Lengkap</h3>
-    </div>
+                <form action="{{ route('pesan.index', $service->id) }}" method="GET" id="booking-form">
+                    <div class="mt-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
+                            <h3 class="text-xl font-bold text-slate-900">Pilih Paket / Ukuran</h3>
+                        </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="bg-blue-50 px-6 py-3 border-b border-blue-100 flex justify-between items-center">
-            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Jenis Layanan / Ukuran</span>
-            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Harga</span>
-        </div>
+                        @if(!empty($service->pricelist) && count($service->pricelist) > 0)
+                            <div class="space-y-4">
+                                @foreach($service->pricelist as $item)
+                                    @if(!empty($item['name']) && isset($item['price']))
+                                    <div class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:shadow-md transition group relative overflow-hidden select-none"
+                                         onclick="addItem('{{ $item['name'] }}', {{ $item['price'] }})">
+                                        
+                                        <div>
+                                            <h4 class="font-bold text-slate-700 group-hover:text-blue-600 transition uppercase">{{ $item['name'] }}</h4>
+                                            <span class="text-blue-600 font-bold">Rp {{ number_format($item['price'], 0, ',', '.') }}</span>
+                                        </div>
+                                        
+                                        <div class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition">
+                                            + Tambah
+                                        </div>
+                                        
+                                        <div class="absolute inset-0 bg-blue-50 opacity-0 active:opacity-20 transition-opacity"></div>
+                                    </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex justify-between items-center">
+                                <div>
+                                    <h4 class="font-bold text-slate-800">Paket Standar</h4>
+                                    <p class="text-sm text-slate-500">Harga sesuai deskripsi layanan</p>
+                                </div>
+                                <span class="text-xl font-bold text-slate-900">Rp {{ number_format($service->price, 0, ',', '.') }}</span>
+                                <input type="hidden" name="default_service" value="1">
+                            </div>
+                        @endif
 
-        <div class="divide-y divide-slate-100">
-            @foreach($service->pricelist as $item)
-            <div class="px-6 py-4 flex justify-between items-center hover:bg-slate-50 transition">
-                <span class="text-sm font-medium text-slate-700">{{ $item['name'] }}</span>
-                <span class="text-sm font-bold text-slate-900">Rp {{ number_format($item['price'], 0, ',', '.') }}</span>
-            </div>
-            @endforeach
-        </div>
-    </div>
-    
-    <p class="text-xs text-slate-400 mt-3 flex items-center gap-1">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        Harga dapat berubah sewaktu-waktu tergantung kondisi noda/kesulitan.
-    </p>
-</div>
-@endif
-                
-                @if($service->show_booking)
-                <a href="{{ route('pesan.index', $service->id) }}" class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-blue-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    {{ $service->booking_label ?? 'Buat Pesanan Sekarang' }}
-                </a>
-                @endif
+                        <p class="text-xs text-slate-400 mt-4 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Harga dapat berubah sewaktu-waktu tergantung kondisi noda/kesulitan.
+                        </p>
+                    </div>
+                    
+                    <div id="hidden-inputs-container"></div>
+                </form>
+
             </div>
 
             <div class="space-y-6">
@@ -115,30 +127,19 @@
                     <h3 class="font-bold text-lg text-slate-800 mb-6">Apa yang Anda Dapatkan</h3>
                     <ul class="space-y-6">
                         @php
-                            // Default benefits jika database kosong (biar gak error pas awal)
                             $defaults = [
                                 ['title' => 'Peralatan Lengkap', 'desc' => 'Vacuum cleaner, steam mop, dll.'],
                                 ['title' => 'Bahan Kimia Aman', 'desc' => 'Aman untuk anak & hewan peliharaan.'],
                                 ['title' => 'Staf Terlatih', 'desc' => 'Melalui proses pelatihan ketat.'],
                                 ['title' => 'Garansi Kepuasan', 'desc' => 'Pengerjaan ulang gratis 24 jam.']
                             ];
-                            // Gabungkan data DB dengan default jika null
                             $benefits = $service->benefits ?? $defaults;
                         @endphp
 
                         @foreach($benefits as $index => $benefit)
                         <li class="flex gap-4">
-                            <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center 
-                                {{ $index == 0 ? 'bg-blue-50 text-blue-600' : '' }}
-                                {{ $index == 1 ? 'bg-green-50 text-green-600' : '' }}
-                                {{ $index == 2 ? 'bg-purple-50 text-purple-600' : '' }}
-                                {{ $index == 3 ? 'bg-orange-50 text-orange-600' : '' }}
-                            ">
-                                @if($index == 0) <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 00-2 2m0 0v5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0v-5a2 2 0 01-2-2v6a2 2 0 012 2M5 11l7-7 7 7" /></svg>
-                                @elseif($index == 1) <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                @elseif($index == 2) <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                                @else <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" /></svg>
-                                @endif
+                            <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-blue-50 text-blue-600">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                             </div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-sm">{{ $benefit['title'] }}</h4>
@@ -153,37 +154,53 @@
                     <h3 class="font-bold text-lg text-slate-800 mb-6">Alur Pengerjaan</h3>
                     <div class="relative pl-2">
                          <div class="absolute left-[15px] top-2 bottom-4 w-0.5 bg-slate-200"></div>
-
                         <div class="flex gap-4 mb-6 relative z-10">
                             <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold shrink-0 ring-4 ring-white">1</div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-xs uppercase text-blue-600 mb-1">Langkah 1</h4>
                                 <h5 class="font-bold text-slate-800 text-sm">Persiapan & Inspeksi</h5>
-                                <p class="text-xs text-slate-500 mt-1">Tim tiba dan memeriksa area fokus pembersihan.</p>
                             </div>
                         </div>
-
                         <div class="flex gap-4 mb-6 relative z-10">
                             <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-bold shrink-0 ring-4 ring-white">2</div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-xs uppercase text-slate-400 mb-1">Langkah 2</h4>
                                 <h5 class="font-bold text-slate-800 text-sm">Proses Pembersihan</h5>
-                                <p class="text-xs text-slate-500 mt-1">Pembersihan menyeluruh menggunakan alat khusus.</p>
                             </div>
                         </div>
-
                          <div class="flex gap-4 relative z-10">
                             <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-bold shrink-0 ring-4 ring-white">3</div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-xs uppercase text-slate-400 mb-1">Langkah 3</h4>
                                 <h5 class="font-bold text-slate-800 text-sm">Finishing & Cek Hasil</h5>
-                                <p class="text-xs text-slate-500 mt-1">Pengecekan akhir bersama Anda sebelum tim pulang.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-slate-900 rounded-2xl p-6 text-white text-center">
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sticky top-8 z-10">
+                    <h3 class="font-bold text-slate-800 mb-4 pb-4 border-b flex items-center gap-2">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        Ringkasan Pilihan
+                    </h3>
+                    
+                    <ul id="summary-list" class="space-y-3 text-sm text-slate-600 mb-6 max-h-40 overflow-y-auto">
+                        <li class="text-slate-400 italic text-center py-2 bg-slate-50 rounded-lg">Belum ada layanan dipilih</li>
+                    </ul>
+
+                    <div class="flex justify-between items-center mb-6 pt-4 border-t border-dashed">
+                        <span class="font-bold text-slate-600 text-sm">Total Estimasi</span>
+                        <span class="font-extrabold text-2xl text-blue-600" id="total-display">Rp 0</span>
+                    </div>
+
+                    <button type="submit" form="booking-form" class="w-full py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        <span>Lanjut Pemesanan</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </button>
+                    <p class="text-[10px] text-center text-slate-400 mt-3">Lanjutkan untuk isi data diri & jadwal.</p>
+                </div>
+
+                <div class="bg-slate-900 rounded-2xl p-6 text-white text-center mt-6">
                     <h3 class="font-bold mb-2">Butuh Bantuan?</h3>
                     <p class="text-xs text-slate-400 mb-4">Hubungi manajer operasional untuk pertanyaan teknis.</p>
                     <a href="https://wa.me/{{ $setting->whatsapp_number ?? '' }}" class="inline-block px-4 py-2 bg-white text-slate-900 font-bold text-sm rounded-lg hover:bg-slate-100 transition">
@@ -196,4 +213,124 @@
 
     </div>
 </div>
+
+<div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-6 py-3 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3 pointer-events-none">
+    <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    </div>
+    <span id="toast-message" class="text-sm font-bold">Layanan ditambahkan</span>
+</div>
+
+<script>
+    // Variable global untuk menyimpan item yang dipilih
+    // Format: { 'NamaLayanan|Harga': Jumlah }
+    let selectedItems = {}; 
+    let basePrice = {{ (!empty($service->pricelist) && count($service->pricelist) > 0) ? 0 : $service->price }};
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-message');
+        toastMsg.innerText = message;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+            toast.classList.add('translate-y-20', 'opacity-0');
+        }, 1500);
+    }
+
+    // Fungsi Utama: Tambah Item (Dipanggil saat klik tombol paket)
+    function addItem(name, price) {
+        const key = name + '|' + price;
+        
+        // Tambah jumlah
+        if (selectedItems[key]) {
+            selectedItems[key]++;
+        } else {
+            selectedItems[key] = 1;
+        }
+
+        updateUI();
+        showToast(name + ' ditambahkan');
+    }
+
+    // Fungsi Kurang Item (Dipanggil dari list ringkasan)
+    function removeItem(name, price) {
+        const key = name + '|' + price;
+        
+        if (selectedItems[key]) {
+            selectedItems[key]--;
+            if (selectedItems[key] <= 0) {
+                delete selectedItems[key];
+            }
+        }
+        updateUI();
+    }
+
+    // Update Tampilan (Ringkasan & Total & Input Hidden)
+    function updateUI() {
+        const summaryList = document.getElementById('summary-list');
+        const totalDisplay = document.getElementById('total-display');
+        const hiddenInputsContainer = document.getElementById('hidden-inputs-container');
+
+        summaryList.innerHTML = '';
+        hiddenInputsContainer.innerHTML = ''; // Reset input hidden
+        
+        let total = basePrice;
+        let hasItem = false;
+
+        // Loop item yang ada di keranjang
+        for (const [key, qty] of Object.entries(selectedItems)) {
+            hasItem = true;
+            const [name, priceStr] = key.split('|');
+            const price = parseFloat(priceStr);
+            const subtotal = price * qty;
+            total += subtotal;
+
+            // 1. Tampilkan di List Ringkasan
+            const li = document.createElement('li');
+            li.className = 'flex justify-between items-center border-b border-slate-50 pb-2 last:border-0';
+            li.innerHTML = `
+                <div class="flex-1">
+                    <div class="flex justify-between">
+                        <span class="font-medium text-slate-700">${name}</span>
+                        <span class="font-bold text-slate-800">Rp ${(price * qty).toLocaleString('id-ID')}</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <button type="button" onclick="removeItem('${name}', ${price})" class="w-5 h-5 rounded bg-slate-100 text-slate-500 hover:bg-red-100 hover:text-red-600 flex items-center justify-center font-bold text-xs">-</button>
+                        <span class="text-xs text-slate-500">x${qty}</span>
+                        <button type="button" onclick="addItem('${name}', ${price})" class="w-5 h-5 rounded bg-slate-100 text-slate-500 hover:bg-blue-100 hover:text-blue-600 flex items-center justify-center font-bold text-xs">+</button>
+                    </div>
+                </div>
+            `;
+            summaryList.appendChild(li);
+
+            // 2. Buat Input Hidden (Agar terkirim ke server)
+            // Kita loop sebanyak QTY agar controller menerima array item terpisah
+            // Atau kirim qty-nya (tergantung controller kamu).
+            // Agar aman dengan controller sebelumnya, kita kirim item terpisah (berulang).
+            for(let i=0; i<qty; i++) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'custom_items[]';
+                input.value = key; // Kirim "Nama|Harga"
+                hiddenInputsContainer.appendChild(input);
+            }
+        }
+
+        // Tampilan Kosong
+        if (!hasItem) {
+            if (basePrice > 0) {
+                 summaryList.innerHTML = '<li class="flex justify-between items-center"><span class="font-medium">Paket Standar</span> <span class="font-bold text-slate-800">Rp '+basePrice.toLocaleString('id-ID')+'</span></li>';
+            } else {
+                summaryList.innerHTML = '<li class="text-slate-400 italic text-center py-2 bg-slate-50 rounded-lg">Belum ada layanan dipilih</li>';
+            }
+        }
+
+        totalDisplay.innerText = 'Rp ' + total.toLocaleString('id-ID');
+    }
+
+    // Init saat load (siapa tahu ada harga dasar)
+    document.addEventListener("DOMContentLoaded", function() {
+        updateUI();
+    });
+</script>
 @endsection
