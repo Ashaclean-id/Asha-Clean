@@ -29,18 +29,6 @@
                     {{ $setting->hero_description ?? 'Solusi kebersihan terbaik untuk hunian dan kantor Anda. Pesan sekarang dengan mudah.' }}
                 </p>
 
-                <div class="mt-6 flex flex-wrap gap-3">
-                    <a href="/booking"
-                       class="bg-[#20cfff] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#006eb7] transition shadow-lg shadow-blue-200/50">
-                        Pesan Sekarang
-                    </a>
-
-                    <a href="#services"
-                       class="px-6 py-3 rounded-lg font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">
-                        Lihat Layanan
-                    </a>
-                </div>
-
                 <div class="mt-6 flex items-center gap-4 text-sm text-slate-600">
                     <div class="flex -space-x-2">
                         <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d"
