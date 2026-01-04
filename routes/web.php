@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Database\Schema\Blueprint;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,10 +66,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });
 
+Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
-Route::get('/forgot-password', function () { return 'Forgot password page not implemented yet'; })->name('password.request');
 
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->middleware('guest')->name('password.request');
+
+// 2. Kirim Email Link
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
+
+// 3. Form Reset Password (dari Email)
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->middleware('guest')->name('password.reset');
+
+// 4. Proses Update Password
+Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])->middleware('guest')->name('password.update');
 
 /*
 |--------------------------------------------------------------------------

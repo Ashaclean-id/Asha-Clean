@@ -38,81 +38,71 @@
 
                 <div class="hidden md:flex items-center bg-slate-100/50 p-1.5 rounded-full border border-slate-200/60 backdrop-blur-sm relative z-50">
     
-    <a href="{{ route('home.landing') }}" 
-       class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 
-              {{ request()->routeIs('home.landing') ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-blue-600 hover:bg-white/60' }}">
-        Home
-    </a>
+                    <a href="{{ route('home.landing') }}" 
+                       class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 
+                              {{ request()->routeIs('home.landing') ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-blue-600 hover:bg-white/60' }}">
+                        Home
+                    </a>
 
-    <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-        
-        <a href="{{ route('home.landing') }}#services" 
-           class="px-5 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/60 transition-all duration-300 flex items-center gap-1 cursor-pointer">
-            Layanan
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform duration-300" :class="open ? 'rotate-180 text-blue-600' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-        </a>
+                    <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                        
+                        <a href="{{ route('home.landing') }}#services" 
+                           class="px-5 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/60 transition-all duration-300 flex items-center gap-1 cursor-pointer">
+                            Layanan
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform duration-300" :class="open ? 'rotate-180 text-blue-600' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </a>
 
-        <div x-show="open"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 translate-y-2"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100 translate-y-0"
-             x-transition:leave-end="opacity-0 translate-y-2"
-             class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[400px] bg-white rounded-2xl shadow-xl border border-slate-100 p-4 grid grid-cols-2 gap-2 z-50"
-             style="display: none;">
-             
-             <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-100 transform rotate-45"></div>
+                        <div x-show="open"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 translate-y-2"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 translate-y-0"
+                             x-transition:leave-end="opacity-0 translate-y-2"
+                             class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[400px] bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-50"
+                             style="display: none;">
+                             
+                             <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-100 transform rotate-45"></div>
 
-             <a href="{{ route('services.show', 'cuci-springbed') }}" class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl transition group">
-                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-xs">🛏️</div>
-                <div class="text-sm font-semibold text-slate-600 group-hover:text-blue-600">Springbed</div>
-             </a>
+                             <div class="grid grid-cols-2 gap-2">
+                                 {{-- Pastikan variabel $global_services dikirim dari AppServiceProvider --}}
+                                 @if(isset($global_services) && count($global_services) > 0)
+                                     @foreach($global_services as $service)
+                                         <a href="{{ route('services.show', $service->slug ?? 'default') }}" class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl transition group">
+                                             <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-xs overflow-hidden">
+                                                @if(!empty($service->icon))
+                                                    <img src="{{ asset('storage/' . $service->icon) }}" class="w-full h-full object-cover">
+                                                @else
+                                                    ✨
+                                                @endif
+                                             </div>
+                                             <div class="text-sm font-semibold text-slate-600 group-hover:text-blue-600 truncate">
+                                                 {{ $service->name ?? 'Layanan' }}
+                                             </div>
+                                         </a>
+                                     @endforeach
+                                 @else
+                                     <div class="col-span-2 text-center py-2 text-slate-400 text-xs">
+                                         Belum ada layanan ditambahkan.
+                                     </div>
+                                 @endif
+                             </div>
+                        </div>
+                    </div>
 
-             <a href="{{ route('services.show', 'cuci-sofa') }}" class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl transition group">
-                <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-xs">🛋️</div>
-                <div class="text-sm font-semibold text-slate-600 group-hover:text-blue-600">Sofa & Kursi</div>
-             </a>
+                    <a href="{{ route('home.landing') }}#promo" 
+                    class="px-5 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-rose-500 hover:bg-white/60 transition-all duration-300 cursor-pointer">
+                        Promo
+                    </a>
 
-             <a href="{{ route('services.show', 'cuci-karpet') }}" class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl transition group">
-                <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-xs">🧶</div>
-                <div class="text-sm font-semibold text-slate-600 group-hover:text-blue-600">Karpet</div>
-             </a>
+                    <a href="{{ route('home.landing') }}#footer" 
+                    class="px-5 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/60 transition-all duration-300 cursor-pointer">
+                        Tentang Kami
+                    </a>
 
-             <a href="{{ route('services.show', 'baby-care') }}" class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl transition group">
-                <div class="w-8 h-8 rounded-lg bg-pink-100 text-pink-600 flex items-center justify-center text-xs">👶</div>
-                <div class="text-sm font-semibold text-slate-600 group-hover:text-blue-600">Baby Care</div>
-             </a>
-
-             <a href="{{ route('services.show', 'general-cleaning') }}" class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl transition group">
-                <div class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center text-xs">✨</div>
-                <div class="text-sm font-semibold text-slate-600 group-hover:text-blue-600">General Cleaning</div>
-             </a>
-
-             <a href="{{ route('services.show', 'interior-mobil') }}" class="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-xl transition group">
-                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">🚗</div>
-                <div class="text-sm font-semibold text-slate-600 group-hover:text-blue-600">Interior Mobil</div>
-             </a>
-        </div>
-            </div>
-
-            <a href="#" 
-            class="px-5 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-rose-500 hover:bg-white/60 transition-all duration-300">
-                Promo
-            </a>
-
-            <a href="#" 
-            class="px-5 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/60 transition-all duration-300">
-                Blog
-            </a>
-
-            <a href="/booking" 
-            class="px-5 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-blue-600 hover:bg-white/60 transition-all duration-300">
-                Booking
-            </a>
-        </div>
+                </div>
 
                 <div class="flex items-center gap-4">
                     @auth
@@ -120,9 +110,20 @@
                             
                             <button @click="open = !open" 
                                     class="flex items-center gap-3 pl-1 pr-2 py-1 rounded-full border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300 group">
-                                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white group-hover:ring-blue-200 transition-all">
-                                    {{ substr(Auth::user()->name, 0, 1) }}
-                                </div>
+                                
+                                {{-- PERUBAHAN DI SINI: Cek Foto Profil --}}
+                                @if(Auth::user()->avatar)
+                                    {{-- Jika ada foto, tampilkan foto --}}
+                                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
+                                         alt="Profile" 
+                                         class="w-9 h-9 rounded-full object-cover shadow-md ring-2 ring-white group-hover:ring-blue-200 transition-all">
+                                @else
+                                    {{-- Jika tidak ada, tampilkan inisial (Kode Lama) --}}
+                                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-sm shadow-md ring-2 ring-white group-hover:ring-blue-200 transition-all">
+                                        {{ substr(Auth::user()->name, 0, 1) }}
+                                    </div>
+                                @endif
+
                                 <span class="text-sm font-semibold text-slate-700 max-w-[100px] truncate group-hover:text-blue-700">
                                     {{ Auth::user()->name }}
                                 </span>
@@ -170,12 +171,11 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                         </svg>
-                                        
+                                        Keluar
                                     </button>
                                 </form>
                             </div>
                         </div>
-
                     @else
                         <div class="flex items-center gap-3">
                             <a href="{{ route('login') }}" class="hidden md:inline-block text-sm font-bold text-slate-600 hover:text-blue-600 transition">
@@ -202,7 +202,7 @@
         @yield('content')
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-10 mt-auto relative z-10">
+    <footer class="bg-white border-t border-slate-200 py-10 mt-auto relative z-10" id="footer">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <p class="text-slate-500 text-sm">© {{ date('Y') }} Asha Clean. All rights reserved.</p>
         </div>

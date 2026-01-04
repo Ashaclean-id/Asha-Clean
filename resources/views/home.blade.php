@@ -2,103 +2,122 @@
 
 @section('content')
 
+<section class="relative min-h-[85vh] flex items-center overflow-hidden">
 
-<!-- hero -->
-<section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-[#98e9ff] via-white to-[#EAF6FF]"></div>
-
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
-        <div>
-            <span class="inline-block px-3 py-1 rounded-full bg-[#E8FFF6] text-[#20cfff] border border-[#20cfff] text-sm font-medium">
-                Dipercaya oleh rumah & kantor yang sibuk
-            </span>
-
-            <h1 class="mt-5 text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
-                {{ $setting->hero_title ?? 'Layanan Kebersihan Profesional' }}
-            </h1>
-
-            <p class="mt-4 text-lg text-slate-600">
-                {{ $setting->hero_description ?? 'Solusi kebersihan terbaik untuk hunian dan kantor Anda. Pesan sekarang dengan mudah.' }}
-            </p>
-
-            <div class="mt-6 flex flex-wrap gap-3">
-                <a href="/booking" class="bg-[#20cfff] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#006eb7] transition shadow-lg shadow-blue-200/50">
-                    Pesan Sekarang
-                </a>
-                <a href="#services" class="px-6 py-3 rounded-lg font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">
-                    Lihat Layanan
-                </a>
-            </div>
-
-      <div class="mt-6 flex items-center gap-4 text-sm text-slate-500">
-  <div class="flex -space-x-2">
-    <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d" class="w-8 h-8 rounded-full border-2 border-white">
-    <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6" class="w-8 h-8 rounded-full border-2 border-white">
-    <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c" class="w-8 h-8 rounded-full border-2 border-white">
-  </div>
-  <p>
-    <span class="font-semibold text-slate-700">1.200+ pelanggan puas</span>
-    dari rumah dan perkantoran
-  </p>
-</div>
-</div>
-
-<div>
-  <div class="relative">
     <img
-      class="rounded-2xl shadow-2xl ring-1 ring-black/5 block"
-      src="{{ asset('images/foto_utama.png') }}"
-      alt="layanan kebersihan profesional"
+        src="{{ asset('images/foto_utama.png') }}"
+        alt="Layanan kebersihan profesional"
+        class="absolute inset-0 w-full h-full object-cover"
     />
-    <div class="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 ring-1 ring-black/5">
-      <p class="text-sm font-semibold text-slate-700">
-        Tersedia layanan di hari yang sama
-      </p>
-      <p class="text-xs text-slate-500">
-        Pagi, siang, dan malam
-      </p>
+
+    <div class="absolute inset-0 bg-gradient-to-r from-white/70 via-white/40 to-transparent"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="max-w-xl">
+
+            <div class="bg-white/70 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-xl ring-1 ring-black/5">
+
+                <span class="inline-block px-3 py-1 rounded-full bg-[#E8FFF6] text-[#20cfff] border border-[#20cfff] text-sm font-medium">
+                    Dipercaya oleh rumah & kantor yang sibuk
+                </span>
+
+                <h1 class="mt-5 text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
+                    {{ $setting->hero_title ?? 'Layanan Kebersihan Profesional' }}
+                </h1>
+
+                <p class="mt-4 text-lg text-slate-600">
+                    {{ $setting->hero_description ?? 'Solusi kebersihan terbaik untuk hunian dan kantor Anda. Pesan sekarang dengan mudah.' }}
+                </p>
+
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <a href="/booking"
+                       class="bg-[#20cfff] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#006eb7] transition shadow-lg shadow-blue-200/50">
+                        Pesan Sekarang
+                    </a>
+
+                    <a href="#services"
+                       class="px-6 py-3 rounded-lg font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">
+                        Lihat Layanan
+                    </a>
+                </div>
+
+                <div class="mt-6 flex items-center gap-4 text-sm text-slate-600">
+                    <div class="flex -space-x-2">
+                        <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d"
+                             class="w-8 h-8 rounded-full border-2 border-white">
+                        <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6"
+                             class="w-8 h-8 rounded-full border-2 border-white">
+                        <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c"
+                             class="w-8 h-8 rounded-full border-2 border-white">
+                    </div>
+                    <p>
+                        <span class="font-semibold text-slate-800">1.200+ pelanggan puas</span>
+                        dari rumah & perkantoran
+                    </p>
+                </div>
+
+            </div>
+            </div>
     </div>
-  </div>
-</div>
-</div>
+
+    <div class="absolute bottom-8 right-8 bg-white rounded-xl shadow-lg px-4 py-3 ring-1 ring-black/5 flex items-center gap-3">
+        <span class="w-8 h-8 flex items-center justify-center rounded-full bg-green-100 text-green-600">
+            ✓
+        </span>
+        <div>
+            <p class="text-sm font-semibold text-slate-700">
+                Ready Hari Ini!
+            </p>
+            <p class="text-xs text-slate-500">
+                Tim standby 24 jam
+            </p>
+        </div>
+    </div>
+
 </section>
 
-<!-- SERVICES -->
-<section class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4">
+
+<section class="py-20 bg-white" id="services">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-extrabold text-slate-900">Layanan Kami</h2>
+        <p class="text-slate-500 mt-2">Pilih paket kebersihan sesuai kebutuhan Anda</p>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       @foreach($services as $service)
-      <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition
+      <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300
                   border border-slate-100 group flex flex-col h-full">
 
-        <!-- IMAGE -->
         <div class="relative h-56 overflow-hidden">
-    <img src="{{ asset('storage/' . $service->image) }}"
-         class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-</div>
-
-<div class="p-5 flex flex-col flex-1">
-    <h3 class="text-lg font-bold text-slate-800 mb-1 leading-tight">
-        {{ $service->name }}
-    </h3>
-
-    <p class="text-slate-500 text-sm mb-2 leading-snug line-clamp-2">
-        {{ $service->short_description }}
-    </p>
-
-    <div class="flex items-center justify-between mt-auto">
-        <span class="text-blue-600 font-bold text-sm">
-            Mulai Rp {{ number_format($service->price, 0, ',', '.') }}
-        </span>
-
-        <a href="{{ route('services.show', $service->slug) }}"
-           class="text-sm font-semibold text-slate-700 hover:text-blue-600">
-            Lihat detail →
-        </a>
-    </div>
-</div>
+            <img src="{{ asset('storage/' . $service->image) }}"
+                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
         </div>
+
+        <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-slate-800 mb-2 leading-tight">
+                {{ $service->name }}
+            </h3>
+
+            <p class="text-slate-500 text-sm mb-4 leading-relaxed line-clamp-3">
+                {{ $service->short_description }}
+            </p>
+
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-50">
+                <span class="text-blue-600 font-bold text-base">
+                    Mulai Rp {{ number_format($service->price, 0, ',', '.') }}
+                </span>
+
+                <a href="{{ route('services.show', $service->slug) }}"
+                   class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+      </div>
       @endforeach
     </div>
 
@@ -106,59 +125,55 @@
 </section>
 
 
-
-<!-- promo -->
 @if($setting->show_promotions)
-<section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
+<section class="py-12 bg-slate-50" id="promo">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <div class="mb-8 flex items-center gap-3">
-        <div class="h-8 w-1 bg-blue-500 rounded-full"></div>
-        <h2 class="text-2xl font-bold text-slate-800">🔥 Promo Hari Ini</h2>
-    </div>
+        <div class="mb-8 flex items-center gap-3">
+            <div class="h-8 w-1 bg-blue-500 rounded-full"></div>
+            <h2 class="text-2xl font-bold text-slate-800">🔥 Promo Hari Ini</h2>
+        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        @foreach ([
-            ['text' => $setting->promo_1_text, 'image' => $setting->promo_1_image],
-            ['text' => $setting->promo_2_text, 'image' => $setting->promo_2_image],
-            ['text' => $setting->promo_3_text, 'image' => $setting->promo_3_image]
-        ] as $index => $promo)
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            @foreach ([
+                ['text' => $setting->promo_1_text, 'image' => $setting->promo_1_image],
+                ['text' => $setting->promo_2_text, 'image' => $setting->promo_2_image],
+                ['text' => $setting->promo_3_text, 'image' => $setting->promo_3_image]
+            ] as $index => $promo)
 
-            @if($promo['text']) 
-                <div class="group relative h-48 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-slate-100">
-                    
-                    @if($promo['image'])
-                        <img src="{{ asset('storage/' . $promo['image']) }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    @else
-                        <div class="absolute inset-0 bg-gradient-to-br from-slate-400 to-slate-600"></div>
-                    @endif
+                @if($promo['text']) 
+                    <div class="group relative h-48 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200">
+                        
+                        @if($promo['image'])
+                            <img src="{{ asset('storage/' . $promo['image']) }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                        @else
+                            <div class="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900"></div>
+                        @endif
 
-                    <div class="absolute bottom-0 left-0 p-6 w-full">
-                        <span class="inline-block px-2 py-1 mb-2 text-[10px] font-bold uppercase tracking-wider text-white bg-blue-600/80 rounded backdrop-blur-sm">
-                            Promo {{ $index + 1 }}
-                        </span>
-                        <h3 class="text-xl font-bold text-white leading-tight drop-shadow-md">
-                            {{ $promo['text'] }}
-                        </h3>
+                        <div class="absolute bottom-0 left-0 p-6 w-full z-10">
+                            <span class="inline-block px-2 py-1 mb-2 text-[10px] font-bold uppercase tracking-wider text-white bg-blue-600 rounded shadow-sm">
+                                Promo {{ $index + 1 }}
+                            </span>
+                            <h3 class="text-lg font-bold text-white leading-tight drop-shadow-md line-clamp-2">
+                                {{ $promo['text'] }}
+                            </h3>
+                        </div>
                     </div>
-                </div>
 
-            @else
-                <div class="h-48 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-                    </svg>
-                    <span class="text-sm font-medium">Slot Kosong</span>
-                </div>
-            @endif
+                @else
+                    <div class="h-48 rounded-2xl bg-white border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400">
+                        <span class="text-sm font-medium">Slot Promo {{ $index + 1 }}</span>
+                    </div>
+                @endif
 
-        @endforeach
+            @endforeach
 
+        </div>
     </div>
 </section>
 @endif
-
 
 <!-- Bersih & Nyaman dengan 1 Klik -->
 <section class="py-20 bg-white">

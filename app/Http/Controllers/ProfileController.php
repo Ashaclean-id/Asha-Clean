@@ -5,60 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Booking; // Import Model Booking
+use Illuminate\Validation\Rules;
+use App\Models\Booking;
+use Illuminate\Support\Facades\Storage; 
 
 class ProfileController extends Controller
 {
     /**
-     * Tampilkan Halaman Profil
+     * Menampilkan Halaman Profil & Riwayat Pesanan
      */
     public function index()
     {
         $user = Auth::user();
 
-        // AMBIL RIWAYAT PESANAN
-        // Logika: Cari booking yang nomor HP-nya sama dengan User yang login
-        // (Karena di tabel booking kita simpan 'phone', bukan 'user_id')
-        $orders = Booking::with(['service', 'items'])
-                    ->where('phone', $user->phone) 
-                    ->orderBy('created_at', 'desc')
-                    ->take(5) // Ambil 5 terakhir saja
+        // AMBIL DATA PESANAN (LOGIKA BARU)
+        // 1. where('user_id', $user->id) -> Cari booking punya user ini aja
+        // 2. with('service', 'items') -> Sekalian ambil data layanan & item biar cepat
+        // 3. latest() -> Urutkan dari yang paling baru
+        $orders = Booking::where('user_id', $user->id)
+                    ->with(['service', 'items']) 
+                    ->latest()
                     ->get();
 
         return view('profile.index', compact('user', 'orders'));
     }
 
     /**
-     * Update Informasi Profil (Nama, HP, Alamat)
+     * Update Data Diri (Nama, HP, Alamat)
      */
     public function update(Request $request)
     {
-        $user = Auth::user();
-
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|numeric',
-            'address' => 'required|string|max:255',
+            'phone' => 'nullable|numeric|digits_between:10,15',
+            'address' => 'nullable|string|max:500',
         ]);
 
-        // Update data user di tabel users (pastikan kolom phone/address ada di tabel user)
-        // Jika tabel user bawaan laravel belum ada kolom phone/address, 
-        // kamu perlu menambahkannya via migration, atau simpan di tabel terpisah.
-        // Untuk sekarang, kita asumsikan kolomnya ada atau kita pakai update() standar.
-        
-        $user->name = $request->name;
-        // Simpan phone & address jika kolomnya ada di tabel users
-        // $user->phone = $request->phone; 
-        // $user->address = $request->address;
-        
-        // CATATAN PENTING:
-        // Jika tabel 'users' kamu belum punya kolom 'phone' dan 'address',
-        // Kode di bawah ini akan error. Pastikan sudah migration 'add_phone_to_users'.
-        // Jika belum, komentar dulu baris ini:
-        $user->forceFill([
+        $user = Auth::user();
+
+        $user->update([
+            'name' => $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
-        ])->save();
+        ]);
 
         return back()->with('success', 'Profil berhasil diperbarui!');
     }
@@ -69,20 +58,47 @@ class ProfileController extends Controller
     public function updatePassword(Request $request)
     {
         $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'current_password' => 'required|current_password',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Cek password lama
-        if (!Hash::check($request->current_password, Auth::user()->password)) {
-            return back()->withErrors(['current_password' => 'Password lama tidak sesuai!']);
+        $user = Auth::user();
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return back()->with('success', 'Password berhasil diperbarui!');
+    }
+    public function updateAvatar(Request $request)
+{
+    $request->validate([
+        'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    $user = Auth::user();
+
+    if ($request->hasFile('avatar')) {
+        // 1. Hapus foto lama (Cek apakah ada file-nya)
+        // Kita cek keberadaan file dengan path lengkap
+        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+            Storage::disk('public')->delete($user->avatar);
         }
 
-        // Update password baru
-        Auth::user()->update([
-            'password' => Hash::make($request->password)
-        ]);
+        // 2. Simpan foto baru
+        $file = $request->file('avatar');
+        // Buat nama unik
+        $filename = time() . '_' . $file->getClientOriginalName();
+        
+        // Simpan ke folder 'avatars' di disk public
+        // Hasil path: "avatars/1715432_foto.png"
+        $path = $file->storeAs('avatars', $filename, 'public'); 
 
-        return back()->with('success', 'Password berhasil diubah!');
+        // 3. Update database (SIMPAN FULL PATHNYA)
+        // KITA SIMPAN 'avatars/namafile.jpg' BUKAN CUMA 'namafile.jpg'
+        $user->update(['avatar' => 'avatars/' . $filename]);
     }
+
+    return back()->with('success', 'Foto profil berhasil diperbarui!');
+}
 }

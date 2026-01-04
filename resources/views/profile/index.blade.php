@@ -8,15 +8,56 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {{-- LEFT PROFILE SIDEBAR --}}
-        <div class="bg-gradient-to-b from-[#20cfff] to-[#0fb9e8] text-white rounded-2xl shadow-md p-6 flex flex-col items-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-fit">
+        <div class="bg-gradient-to-b from-[#20cfff] to-[#0fb9e8] text-white rounded-2xl shadow-md p-6 flex flex-col items-center transition-all duration-300 hover:shadow-xl h-fit relative overflow-hidden">
+            
+            {{-- FORM UPLOAD FOTO (HIDDEN) --}}
+            <form id="avatar-form" action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="avatar" id="avatar-input" class="hidden" accept="image/*" onchange="document.getElementById('avatar-form').submit();">
+            </form>
 
-            {{-- Avatar --}}
-            <div class="w-24 h-24 rounded-full bg-white text-[#20cfff] flex items-center justify-center text-3xl font-bold mb-4 transition-transform duration-300 hover:scale-105">
-                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+            {{-- AVATAR CONTAINER --}}
+            <div class="relative group cursor-pointer" onclick="document.getElementById('avatar-input').click();">
+                
+                {{-- TAMPILAN FOTO --}}
+                {{-- Container: Menentukan Ukuran, Bentuk Bulat, dan Border Putih --}}
+                <div class="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden relative bg-white mx-auto">
+                    
+                    @if(Auth::user()->avatar)
+                        {{-- Image: Cukup isi penuh container dengan object-cover --}}
+                        <img src="{{ asset('storage/' . $user->avatar) }}" 
+                             alt="Foto Profil" 
+                             class="w-full h-full object-cover"> 
+                             {{-- object-cover wajib agar gambar tidak gepeng --}}
+                    @else
+                        {{-- Fallback Inisial --}}
+                        <div class="w-full h-full flex items-center justify-center text-[#20cfff] text-4xl font-bold bg-white">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                    @endif
+
+                    {{-- OVERLAY KAMERA (MUNCUL SAAT HOVER) --}}
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+
+                </div>
+                
+                {{-- BADGE EDIT KECIL (MOBILE FRIENDLY) --}}
+                <div class="absolute bottom-0 right-0 bg-white text-[#20cfff] p-1.5 rounded-full shadow-md border-2 border-[#20cfff] md:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                </div>
             </div>
 
+            <p class="text-xs text-white/70 mt-2">Klik foto untuk mengganti</p>
+
             {{-- User Info --}}
-            <h2 class="text-lg font-semibold text-center">
+            <h2 class="text-lg font-semibold text-center mt-4">
                 {{ Auth::user()->name }}
             </h2>
             <p class="text-sm text-white/80 mb-6 text-center">
@@ -99,36 +140,6 @@
                 </form>
             </div>
 
-            {{-- KEAMANAN AKUN --}}
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
-                <h3 class="font-semibold text-gray-800 mb-4 border-b pb-2">Ganti Password</h3>
-
-                <form method="POST" action="{{ route('profile.password') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    @csrf
-
-                    <div>
-                        <label class="text-sm font-medium text-gray-700 mb-1 block">Password Lama</label>
-                        <input type="password" name="current_password" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#20cfff] focus:border-[#20cfff] outline-none transition">
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-gray-700 mb-1 block">Password Baru</label>
-                        <input type="password" name="password" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#20cfff] focus:border-[#20cfff] outline-none transition">
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-gray-700 mb-1 block">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#20cfff] focus:border-[#20cfff] outline-none transition">
-                    </div>
-
-                    <div class="md:col-span-3 text-right mt-2">
-                        <button type="submit" class="bg-slate-700 hover:bg-slate-800 transition-colors duration-300 text-white px-6 py-2.5 rounded-lg shadow hover:shadow-md font-medium">
-                            Update Password
-                        </button>
-                    </div>
-                </form>
-            </div>
-
             {{-- RIWAYAT PESANAN --}}
             <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 overflow-hidden">
                 <h3 class="font-semibold text-gray-800 mb-4 border-b pb-2">Riwayat Pesanan Terakhir</h3>
@@ -141,6 +152,7 @@
                                 <th class="text-center py-3 px-4">Tanggal</th>
                                 <th class="text-right py-3 px-4">Total</th>
                                 <th class="text-center py-3 px-4">Status</th>
+                                <th class="text-right py-3 px-4">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
@@ -169,10 +181,21 @@
                                         </span>
                                     @endif
                                 </td>
+                                <td class="text-right py-3 px-4">
+                                    @if($order->payment_status == 'unpaid')
+                                        <a href="{{ route('pesan.payment', $order->id) }}" class="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-blue-700 transition shadow-sm">
+                                            Bayar
+                                        </a>
+                                    @elseif($order->payment_status == 'paid')
+                                        <a href="{{ route('pesan.success', $order->id) }}" class="inline-block bg-white border border-slate-200 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-slate-50 transition">
+                                            Invoice
+                                        </a>
+                                    @endif
+                                </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="py-8 text-center text-slate-400 italic">
+                                <td colspan="5" class="py-8 text-center text-slate-400 italic">
                                     Belum ada riwayat pesanan.
                                 </td>
                             </tr>
