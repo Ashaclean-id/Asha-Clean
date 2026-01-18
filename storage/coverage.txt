@@ -1,0 +1,46 @@
+
+
+[1;37;40mCode Coverage Report:      [0m
+[1;37;40m  2026-01-18 20:52:20      [0m
+[1;37;40m                           [0m
+[1;37;40m Summary:                  [0m
+[30;43m  Classes: 52.38% (11/21)  [0m
+[30;43m  Methods: 75.51% (37/49)  [0m
+[30;43m  Lines:   74.72% (328/439)[0m
+
+App\Http\Controllers\AdminBookingController
+  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% ( 10/ 10)[0m
+App\Http\Controllers\AdminDashboardController
+  [37;41mMethods:  50.00% ( 1/ 2)[0m   [30;42mLines:  95.74% ( 45/ 47)[0m
+App\Http\Controllers\AdminReviewController
+  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% ( 14/ 14)[0m
+App\Http\Controllers\Auth\AuthController
+  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% ( 17/ 17)[0m
+App\Http\Controllers\Auth\ForgotPasswordController
+  [30;43mMethods:  75.00% ( 3/ 4)[0m   [30;43mLines:  79.31% ( 23/ 29)[0m
+App\Http\Controllers\Auth\RegisterController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 13/ 13)[0m
+App\Http\Controllers\PageController
+  [37;41mMethods:  50.00% ( 1/ 2)[0m   [30;43mLines:  88.24% ( 30/ 34)[0m
+App\Http\Controllers\PesanController
+  [30;43mMethods:  75.00% ( 3/ 4)[0m   [37;41mLines:  39.09% ( 43/110)[0m
+App\Http\Controllers\ProfileController
+  [30;43mMethods:  75.00% ( 3/ 4)[0m   [30;43mLines:  69.23% ( 27/ 39)[0m
+App\Http\Controllers\ReviewController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 17/ 17)[0m
+App\Http\Controllers\ServiceController
+  [30;43mMethods:  66.67% ( 4/ 6)[0m   [30;43mLines:  84.81% ( 67/ 79)[0m
+App\Http\Middleware\RoleMiddleware
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [30;43mLines:  80.00% (  4/  5)[0m
+App\Models\Booking
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  2/  2)[0m
+App\Models\BookingItem
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+App\Models\Review
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+App\Models\Service
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  6/  6)[0m
+App\Models\User
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  4/  4)[0m
+App\Providers\AppServiceProvider
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  4/  4)[0m

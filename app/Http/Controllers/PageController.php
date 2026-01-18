@@ -55,7 +55,19 @@ class PageController extends Controller
     {
         $services = Service::where('is_active', 1)->get();
         $setting = LandingSetting::first();
+        
+        // Tambahkan variabel yang dibutuhkan oleh view home
+        $reviewsPreview = Review::with('service')
+            ->where('status', 'approved')
+            ->latest()
+            ->take(3)
+            ->get();
 
-        return view('home', compact('services', 'setting'));
+        $reviewsAll = Review::with('service')
+            ->where('status', 'approved')
+            ->latest()
+            ->get();
+
+        return view('home', compact('services', 'setting', 'reviewsPreview', 'reviewsAll'));
     }
 }

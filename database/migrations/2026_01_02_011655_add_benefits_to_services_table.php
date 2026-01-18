@@ -12,15 +12,15 @@ return new class extends Migration
     public function up()
 {
     Schema::table('services', function (Blueprint $table) {
-        // Kita pakai JSON agar bisa menyimpan banyak harga dalam 1 kolom
-        $table->json('pricelist')->nullable()->after('price'); 
+        // Kolom untuk menyimpan daftar keuntungan/manfaat layanan
+        $table->json('benefits')->nullable(); 
     });
 }
 
 public function down()
 {
     Schema::table('services', function (Blueprint $table) {
-        $table->dropColumn('pricelist');
+        $table->dropColumn('benefits');
     });
 }
 };
