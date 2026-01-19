@@ -14,23 +14,25 @@ return new class extends Migration
     Schema::create('services', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->string('slug')->unique();
         $table->text('short_description')->nullable();
         $table->longText('full_description')->nullable();
-        
-        // --- INI TAMBAHANNYA SUPAYA SESUAI DESAIN ---
-        $table->decimal('price', 12, 0)->default(0);
-        $table->string('duration')->nullable();      
-        $table->integer('team_size')->default(1);    // Untuk "Jumlah Tim"
-        $table->boolean('show_booking')->default(true); // Toggle "Tampilkan Tombol"
-        $table->string('booking_label')->default('Pesan Sekarang'); // Input "Label Tombol"
-        
+        $table->decimal('price', 10, 2)->default(0);
+        $table->string('duration')->nullable();
+        $table->integer('team_size')->nullable(); // Pastikan ini ada kalau error team_size
+        $table->boolean('show_booking')->default(true);
+        $table->string('booking_label')->nullable();
+        $table->string('slug')->unique();
         $table->string('image')->nullable();
+        
+        // --- KOLOM benefits dan pricelist ditambahkan di migrasi terpisah ---
+        // Lihat: 2026_01_02_011655_add_benefits_to_services_table.php (menambahkan pricelist)
+        // Lihat: 2026_01_02_013802_add_pricelist_to_services_table.php (duplicate, skip)
+        // ---------------------------------------------------------------------
+
         $table->boolean('is_active')->default(true);
         $table->timestamps();
     });
 }
-
     /**
      * Reverse the migrations.
      */
