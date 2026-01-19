@@ -217,4 +217,90 @@ class ServiceControllerTest extends TestCase
 
         $response->assertRedirect('/login');
     }
+
+    /**
+     * Test admin can update service with new image.
+     * @requires extension gd
+     */
+    public function test_admin_can_update_service_with_image(): void
+    {
+        if (!function_exists('imagecreatetruecolor')) {
+            $this->markTestSkipped('GD extension is not installed.');
+        }
+
+        $admin = User::factory()->create(['role' => 'admin']);
+        
+        // Create service with existing image
+        $oldImage = UploadedFile::fake()->image('old_service.jpg');
+        $oldPath = $oldImage->store('services', 'public');
+        $service = Service::factory()->create(['image' => $oldPath]);
+
+        // Update with new image
+        $newImage = UploadedFile::fake()->image('new_service.jpg');
+        $response = $this->actingAs($admin)->put("/admin/services/{$service->id}", [
+            'name' => 'Updated Service',
+            'price' => 250000,
+            'image' => $newImage,
+        ]);
+
+        $response->assertRedirect(route('admin.services.index'));
+        
+        $service->refresh();
+        // Old image should be deleted
+        Storage::disk('public')->assertMissing($oldPath);
+        // New image should exist
+        Storage::disk('public')->assertExists($service->image);
+    }
+
+    /**
+     * Test admin can update service with benefits and pricelist.
+     */
+    public function test_admin_can_update_service_with_benefits_and_pricelist(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $service = Service::factory()->create();
+
+        $response = $this->actingAs($admin)->put("/admin/services/{$service->id}", [
+            'name' => 'Service With Benefits',
+            'price' => 300000,
+            'benefit_1_title' => 'Benefit One',
+            'benefit_1_desc' => 'Description one',
+            'benefit_2_title' => 'Benefit Two',
+            'benefit_2_desc' => 'Description two',
+            'price_name_1' => 'Small Package',
+            'price_value_1' => 100000,
+            'price_name_2' => 'Large Package',
+            'price_value_2' => 200000,
+            'is_active' => true,
+            'show_booking' => true,
+        ]);
+
+        $response->assertRedirect(route('admin.services.index'));
+        
+        $service->refresh();
+        $this->assertEquals('Service With Benefits', $service->name);
+        $this->assertCount(2, $service->benefits);
+        $this->assertCount(2, $service->pricelist);
+    }
+
+    /**
+     * Test admin can create service without optional fields.
+     */
+    public function test_admin_can_create_service_without_optional_fields(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->post('/admin/services', [
+            'name' => 'Basic Service',
+            'price' => 50000,
+        ]);
+
+        $response->assertRedirect(route('admin.services.index'));
+        $this->assertDatabaseHas('services', [
+            'name' => 'Basic Service',
+            'price' => 50000,
+            'is_active' => 0,
+            'show_booking' => 0,
+        ]);
+    }
 }

@@ -1,46 +1,46 @@
 
 
-[1;37;40mCode Coverage Report:      [0m
-[1;37;40m  2026-01-18 20:52:20      [0m
-[1;37;40m                           [0m
-[1;37;40m Summary:                  [0m
-[30;43m  Classes: 52.38% (11/21)  [0m
-[30;43m  Methods: 75.51% (37/49)  [0m
-[30;43m  Lines:   74.72% (328/439)[0m
+Code Coverage Report:
+  2026-01-19 04:31:13
+
+ Summary:
+  Classes: 52.38% (11/21)
+  Methods: 75.51% (37/49)
+  Lines:   77.22% (339/439)
 
 App\Http\Controllers\AdminBookingController
-  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% ( 10/ 10)[0m
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 10/ 10)
 App\Http\Controllers\AdminDashboardController
-  [37;41mMethods:  50.00% ( 1/ 2)[0m   [30;42mLines:  95.74% ( 45/ 47)[0m
+  Methods:  50.00% ( 1/ 2)   Lines:  95.74% ( 45/ 47)
 App\Http\Controllers\AdminReviewController
-  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% ( 14/ 14)[0m
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 14/ 14)
 App\Http\Controllers\Auth\AuthController
-  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% ( 17/ 17)[0m
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 17/ 17)
 App\Http\Controllers\Auth\ForgotPasswordController
-  [30;43mMethods:  75.00% ( 3/ 4)[0m   [30;43mLines:  79.31% ( 23/ 29)[0m
+  Methods:  75.00% ( 3/ 4)   Lines:  79.31% ( 23/ 29)
 App\Http\Controllers\Auth\RegisterController
-  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 13/ 13)[0m
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 13/ 13)
 App\Http\Controllers\PageController
-  [37;41mMethods:  50.00% ( 1/ 2)[0m   [30;43mLines:  88.24% ( 30/ 34)[0m
+  Methods:  50.00% ( 1/ 2)   Lines:  88.24% ( 30/ 34)
 App\Http\Controllers\PesanController
-  [30;43mMethods:  75.00% ( 3/ 4)[0m   [37;41mLines:  39.09% ( 43/110)[0m
+  Methods:  75.00% ( 3/ 4)   Lines:  39.09% ( 43/110)
 App\Http\Controllers\ProfileController
-  [30;43mMethods:  75.00% ( 3/ 4)[0m   [30;43mLines:  69.23% ( 27/ 39)[0m
+  Methods:  75.00% ( 3/ 4)   Lines:  76.92% ( 30/ 39)
 App\Http\Controllers\ReviewController
-  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 17/ 17)[0m
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 17/ 17)
 App\Http\Controllers\ServiceController
-  [30;43mMethods:  66.67% ( 4/ 6)[0m   [30;43mLines:  84.81% ( 67/ 79)[0m
+  Methods:  66.67% ( 4/ 6)   Lines:  94.94% ( 75/ 79)
 App\Http\Middleware\RoleMiddleware
-  [37;41mMethods:   0.00% ( 0/ 1)[0m   [30;43mLines:  80.00% (  4/  5)[0m
+  Methods:   0.00% ( 0/ 1)   Lines:  80.00% (  4/  5)
 App\Models\Booking
-  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  2/  2)[0m
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  2/  2)
 App\Models\BookingItem
-  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
 App\Models\Review
-  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
 App\Models\Service
-  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  6/  6)[0m
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
 App\Models\User
-  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  4/  4)[0m
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  4/  4)
 App\Providers\AppServiceProvider
-  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  4/  4)[0m
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  4/  4)

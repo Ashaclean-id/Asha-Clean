@@ -107,4 +107,101 @@ class ProfileControllerTest extends TestCase
         $this->assertNotNull($user->avatar);
         Storage::disk('public')->assertExists($user->avatar);
     }
+
+    /**
+     * Test avatar upload replaces old avatar.
+     * @requires extension gd
+     */
+    public function test_avatar_upload_replaces_old_avatar(): void
+    {
+        if (!function_exists('imagecreatetruecolor')) {
+            $this->markTestSkipped('GD extension is not installed.');
+        }
+
+        // Create user with existing avatar
+        $oldImage = UploadedFile::fake()->image('old_avatar.jpg');
+        $oldPath = $oldImage->store('avatars', 'public');
+        
+        $user = User::factory()->create(['avatar' => $oldPath]);
+
+        // Upload new avatar
+        $newImage = UploadedFile::fake()->image('new_avatar.jpg');
+        $response = $this->actingAs($user)->post('/profile/avatar', [
+            'avatar' => $newImage,
+        ]);
+
+        $response->assertRedirect();
+        $user->refresh();
+
+        // Old avatar should be deleted
+        Storage::disk('public')->assertMissing($oldPath);
+        // New avatar should exist
+        Storage::disk('public')->assertExists($user->avatar);
+    }
+
+    /**
+     * Test profile update validation fails with invalid data.
+     */
+    public function test_profile_update_validation_fails(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/profile/update', [
+            'name' => '', // Required field empty
+            'phone' => 'not-numeric', // Should be numeric
+        ]);
+
+        $response->assertSessionHasErrors(['name', 'phone']);
+    }
+
+    /**
+     * Test password update validation fails with wrong current password.
+     */
+    public function test_password_update_fails_with_wrong_current_password(): void
+    {
+        $user = User::factory()->create([
+            'password' => 'correctpassword',
+        ]);
+
+        $response = $this->actingAs($user)->post('/profile/password', [
+            'current_password' => 'wrongpassword',
+            'password' => 'newpassword123',
+            'password_confirmation' => 'newpassword123',
+        ]);
+
+        $response->assertSessionHasErrors('current_password');
+    }
+
+    /**
+     * Test password update validation fails with mismatched confirmation.
+     */
+    public function test_password_update_fails_with_mismatched_confirmation(): void
+    {
+        $user = User::factory()->create([
+            'password' => 'currentpassword',
+        ]);
+
+        $response = $this->actingAs($user)->post('/profile/password', [
+            'current_password' => 'currentpassword',
+            'password' => 'newpassword123',
+            'password_confirmation' => 'differentpassword',
+        ]);
+
+        $response->assertSessionHasErrors('password');
+    }
+
+    /**
+     * Test avatar upload validation fails with non-image file.
+     */
+    public function test_avatar_upload_fails_with_non_image(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->create('document.pdf', 100);
+
+        $response = $this->actingAs($user)->post('/profile/avatar', [
+            'avatar' => $file,
+        ]);
+
+        $response->assertSessionHasErrors('avatar');
+    }
 }

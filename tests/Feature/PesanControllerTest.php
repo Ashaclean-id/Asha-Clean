@@ -166,4 +166,123 @@ class PesanControllerTest extends TestCase
         $this->assertEquals('paid', $booking->payment_status);
         $this->assertEquals('approved', $booking->status);
     }
+
+    /**
+     * Test index method parses custom items correctly.
+     */
+    public function test_index_parses_custom_items_correctly(): void
+    {
+        $service = Service::factory()->create(['price' => 100000]);
+
+        // POST with custom_items - the index method accepts GET but also works with form data
+        $response = $this->call('GET', "/pesan/{$service->id}", [
+            'custom_items' => ['Cuci Sofa|150000', 'Cuci Karpet|100000'],
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertViewHas('selectedItems');
+        $response->assertViewHas('totalPrice', 250000);
+    }
+
+    /**
+     * Test index method with malformed custom items.
+     */
+    public function test_index_handles_malformed_custom_items(): void
+    {
+        $service = Service::factory()->create(['price' => 100000]);
+
+        // Custom items without proper format (missing |)
+        $response = $this->call('GET', "/pesan/{$service->id}", [
+            'custom_items' => ['InvalidFormat'],
+        ]);
+
+        // Controller still works but totalPrice is 0 because malformed items are skipped
+        // (controller checks count($parts) == 2 before adding to total)
+        $response->assertStatus(200);
+        $response->assertViewHas('totalPrice', 0);
+    }
+
+    /**
+     * Test submit validates phone is numeric.
+     */
+    public function test_submit_validates_phone_is_numeric(): void
+    {
+        $service = Service::factory()->create();
+
+        $response = $this->post('/pesan', [
+            'service_id' => $service->id,
+            'name' => 'Test User',
+            'phone' => 'not-a-number',
+            'address' => 'Jl. Test',
+            'booking_date' => '2026-01-25',
+            'booking_time' => '10:00',
+        ]);
+
+        $response->assertSessionHasErrors('phone');
+    }
+
+    /**
+     * Test submit validates booking date is required.
+     */
+    public function test_submit_validates_booking_date_required(): void
+    {
+        $service = Service::factory()->create();
+
+        $response = $this->post('/pesan', [
+            'service_id' => $service->id,
+            'name' => 'Test User',
+            'phone' => '081234567890',
+            'address' => 'Jl. Test',
+            'booking_time' => '10:00',
+        ]);
+
+        $response->assertSessionHasErrors('booking_date');
+    }
+
+    /**
+     * Test submit validates address is required.
+     */
+    public function test_submit_validates_address_required(): void
+    {
+        $service = Service::factory()->create();
+
+        $response = $this->post('/pesan', [
+            'service_id' => $service->id,
+            'name' => 'Test User',
+            'phone' => '081234567890',
+            'booking_date' => '2026-01-25',
+            'booking_time' => '10:00',
+        ]);
+
+        $response->assertSessionHasErrors('address');
+    }
+
+    /**
+     * Test submit validates name is required.
+     */
+    public function test_submit_validates_name_required(): void
+    {
+        $service = Service::factory()->create();
+
+        $response = $this->post('/pesan', [
+            'service_id' => $service->id,
+            'phone' => '081234567890',
+            'address' => 'Jl. Test',
+            'booking_date' => '2026-01-25',
+            'booking_time' => '10:00',
+        ]);
+
+        $response->assertSessionHasErrors('name');
+    }
+
+    /**
+     * Test booking form displays for non-existent service returns 404.
+     */
+    public function test_booking_form_for_nonexistent_service_returns_404(): void
+    {
+        $response = $this->get('/pesan/9999');
+
+        $response->assertStatus(404);
+    }
 }
+
