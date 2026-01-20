@@ -303,4 +303,82 @@ class ServiceControllerTest extends TestCase
             'show_booking' => 0,
         ]);
     }
+
+    /**
+     * Test admin can create service with all benefits filled.
+     */
+    public function test_admin_can_create_service_with_all_benefits(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->post('/admin/services', [
+            'name' => 'Full Benefits Service',
+            'price' => 500000,
+            'is_active' => 'on',
+            'benefit_1_title' => 'Benefit 1',
+            'benefit_1_desc' => 'Description 1',
+            'benefit_2_title' => 'Benefit 2',
+            'benefit_2_desc' => 'Description 2',
+            'benefit_3_title' => 'Benefit 3',
+            'benefit_3_desc' => 'Description 3',
+            'benefit_4_title' => 'Benefit 4',
+            'benefit_4_desc' => 'Description 4',
+        ]);
+
+        $response->assertRedirect(route('admin.services.index'));
+        
+        $service = Service::where('name', 'Full Benefits Service')->first();
+        $this->assertCount(4, $service->benefits);
+    }
+
+    /**
+     * Test admin can create service with multiple pricelist items.
+     */
+    public function test_admin_can_create_service_with_multiple_pricelist(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->post('/admin/services', [
+            'name' => 'Multi Price Service',
+            'price' => 100000,
+            'price_name_1' => 'Small',
+            'price_value_1' => 50000,
+            'price_name_2' => 'Medium',
+            'price_value_2' => 100000,
+            'price_name_3' => 'Large',
+            'price_value_3' => 150000,
+        ]);
+
+        $response->assertRedirect(route('admin.services.index'));
+        
+        $service = Service::where('name', 'Multi Price Service')->first();
+        $this->assertCount(3, $service->pricelist);
+    }
+
+    /**
+     * Test editing non-existent service returns 404.
+     */
+    public function test_editing_nonexistent_service_returns_404(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->get('/admin/services/9999/edit');
+
+        $response->assertStatus(404);
+    }
+
+    /**
+     * Test updating non-existent service returns 404.
+     */
+    public function test_updating_nonexistent_service_returns_404(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->put('/admin/services/9999', [
+            'name' => 'Updated',
+            'price' => 100000,
+        ]);
+
+        $response->assertStatus(404);
+    }
 }

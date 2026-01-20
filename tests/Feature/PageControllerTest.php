@@ -78,4 +78,17 @@ class PageControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * Test landing page displays with default settings when none exist.
+     */
+    public function test_landing_page_uses_default_settings_when_none_exist(): void
+    {
+        // Don't create LandingSetting - let the controller create default
+        
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertViewHas('setting');
+    }
 }

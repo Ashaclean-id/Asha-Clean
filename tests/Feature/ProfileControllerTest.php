@@ -204,4 +204,40 @@ class ProfileControllerTest extends TestCase
 
         $response->assertSessionHasErrors('avatar');
     }
+
+    /**
+     * Test avatar upload when user has no existing avatar.
+     * @requires extension gd
+     */
+    public function test_avatar_upload_when_user_has_no_avatar(): void
+    {
+        if (!function_exists('imagecreatetruecolor')) {
+            $this->markTestSkipped('GD extension is not installed.');
+        }
+        
+        $user = User::factory()->create(['avatar' => null]);
+        $image = UploadedFile::fake()->image('new_avatar.jpg');
+
+        $response = $this->actingAs($user)->post('/profile/avatar', [
+            'avatar' => $image,
+        ]);
+
+        $response->assertRedirect();
+        $user->refresh();
+        $this->assertNotNull($user->avatar);
+        Storage::disk('public')->assertExists($user->avatar);
+    }
+
+    /**
+     * Test profile shows user orders.
+     */
+    public function test_profile_shows_user_orders(): void
+    {
+        $user = User::factory()->create();
+        
+        $response = $this->actingAs($user)->get('/profile');
+
+        $response->assertStatus(200);
+        $response->assertViewHas('orders');
+    }
 }
