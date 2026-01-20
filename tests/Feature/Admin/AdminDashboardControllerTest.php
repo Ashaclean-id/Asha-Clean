@@ -186,4 +186,49 @@ class AdminDashboardControllerTest extends TestCase
             $response->status() === 302
         );
     }
+
+    /**
+     * Test admin can update settings when none exist.
+     */
+    public function test_admin_can_update_settings_when_none_exist(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->put('/admin/settings/update', [
+            'hero_title' => 'New Hero Title',
+            'hero_description' => 'New Description',
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success');
+        $this->assertDatabaseHas('landing_settings', [
+            'hero_title' => 'New Hero Title',
+        ]);
+    }
+
+    /**
+     * Test update settings toggles default to off when not sent.
+     */
+    public function test_update_settings_toggles_default_to_off(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        LandingSetting::factory()->create([
+            'show_ulasan' => true,
+            'show_promotions' => true,
+            'show_quick_support' => true,
+        ]);
+
+        $response = $this->actingAs($admin)->put('/admin/settings/update', [
+            'hero_title' => 'Test Title',
+            'hero_description' => 'Test Desc',
+            // No toggles sent
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('landing_settings', [
+            'show_ulasan' => 0,
+            'show_promotions' => 0,
+            'show_quick_support' => 0,
+        ]);
+    }
 }
