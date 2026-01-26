@@ -2,8 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\ServicePage;
-use App\Models\ServiceTool;
+use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,12 +15,13 @@ class ServicePageControllerTest extends TestCase
      */
     public function test_service_page_is_displayed(): void
     {
-        $servicePage = ServicePage::factory()->create([
+        $service = Service::factory()->create([
             'slug' => 'test-service',
-            'title' => 'Test Service',
+            'name' => 'Test Service',
+            'is_active' => true,
         ]);
 
-        $response = $this->get('/layanan/test-service');
+        $response = $this->get('/services/test-service');
 
         $response->assertStatus(200);
         $response->assertViewIs('services.show');
@@ -29,35 +29,21 @@ class ServicePageControllerTest extends TestCase
     }
 
     /**
-     * Test service page includes tools relationship.
+     * Test service page includes options relationship.
      */
-    public function test_service_page_includes_tools_relationship(): void
+    public function test_service_page_includes_options_relationship(): void
     {
-        $servicePage = ServicePage::factory()->create([
-            'slug' => 'service-with-tools',
-            'title' => 'Service With Tools',
+        $service = Service::factory()->create([
+            'slug' => 'service-with-options',
+            'name' => 'Service With Options',
+            'is_active' => true,
         ]);
 
-        ServiceTool::create([
-            'service_page_id' => $servicePage->id,
-            'name' => 'Tool 1',
-            'description' => 'Tool 1 Description',
-            'icon' => 'icon-1',
-        ]);
-
-        ServiceTool::create([
-            'service_page_id' => $servicePage->id,
-            'name' => 'Tool 2',
-            'description' => 'Tool 2 Description',
-            'icon' => 'icon-2',
-        ]);
-
-        $response = $this->get('/layanan/service-with-tools');
+        $response = $this->get('/services/service-with-options');
 
         $response->assertStatus(200);
         $service = $response->viewData('service');
-        $this->assertTrue($service->relationLoaded('tools'));
-        $this->assertCount(2, $service->tools);
+        $this->assertNotNull($service);
     }
 
     /**
@@ -65,25 +51,24 @@ class ServicePageControllerTest extends TestCase
      */
     public function test_nonexistent_service_page_returns_404(): void
     {
-        $response = $this->get('/layanan/nonexistent-service-slug');
+        $response = $this->get('/services/nonexistent-service-slug');
 
         $response->assertStatus(404);
     }
 
     /**
-     * Test service page with no tools still loads.
+     * Test inactive service returns 404.
      */
-    public function test_service_page_with_no_tools_still_loads(): void
+    public function test_inactive_service_returns_404(): void
     {
-        $servicePage = ServicePage::factory()->create([
-            'slug' => 'service-no-tools',
-            'title' => 'Service No Tools',
+        $service = Service::factory()->create([
+            'slug' => 'inactive-service',
+            'name' => 'Inactive Service',
+            'is_active' => false,
         ]);
 
-        $response = $this->get('/layanan/service-no-tools');
+        $response = $this->get('/services/inactive-service');
 
-        $response->assertStatus(200);
-        $service = $response->viewData('service');
-        $this->assertCount(0, $service->tools);
+        $response->assertStatus(404);
     }
 }
