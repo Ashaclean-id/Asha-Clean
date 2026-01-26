@@ -64,7 +64,7 @@
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Jam Kedatangan</label>
                                 <select name="booking_time" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-600 bg-white" required>
-                                    <option value="">Pilih Jam</option>
+                                    <option value="">Pilih Jam Layanan</option>
                                     <option value="08:00">08:00 WIB</option>
                                     <option value="09:00">09:00 WIB</option>
                                     <option value="10:00">10:00 WIB</option>
@@ -72,6 +72,13 @@
                                     <option value="13:00">13:00 WIB</option>
                                     <option value="14:00">14:00 WIB</option>
                                     <option value="15:00">15:00 WIB</option>
+                                    <option value="16:00">16:00 WIB</option>
+                                    <option value="17:00">17:00 WIB</option>
+                                    <option value="18:00">18:00 WIB</option>
+                                    <option value="19:00">19:00 WIB</option>
+                                    <option value="19:00">19:00 WIB</option>
+                                    <option value="20:00">20:00 WIB</option>
+                                    <option value="19:00">19:00 WIB</option>
                                 </select>
                             </div>
                         </div>

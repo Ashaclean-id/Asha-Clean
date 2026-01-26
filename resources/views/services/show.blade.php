@@ -178,7 +178,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 sticky top-8 z-10">
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
                     <h3 class="font-bold text-slate-800 mb-4 pb-4 border-b flex items-center gap-2">
                         <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                         Ringkasan Pilihan
@@ -303,10 +303,6 @@
             `;
             summaryList.appendChild(li);
 
-            // 2. Buat Input Hidden (Agar terkirim ke server)
-            // Kita loop sebanyak QTY agar controller menerima array item terpisah
-            // Atau kirim qty-nya (tergantung controller kamu).
-            // Agar aman dengan controller sebelumnya, kita kirim item terpisah (berulang).
             for(let i=0; i<qty; i++) {
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -316,7 +312,7 @@
             }
         }
 
-        // Tampilan Kosong
+
         if (!hasItem) {
             if (basePrice > 0) {
                  summaryList.innerHTML = '<li class="flex justify-between items-center"><span class="font-medium">Paket Standar</span> <span class="font-bold text-slate-800">Rp '+basePrice.toLocaleString('id-ID')+'</span></li>';
@@ -328,7 +324,7 @@
         totalDisplay.innerText = 'Rp ' + total.toLocaleString('id-ID');
     }
 
-    // Init saat load (siapa tahu ada harga dasar)
+
     document.addEventListener("DOMContentLoaded", function() {
         updateUI();
     });

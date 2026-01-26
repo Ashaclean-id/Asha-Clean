@@ -180,4 +180,21 @@ class ServiceController extends Controller
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diupdate!');
     }
+
+    /**
+     * HAPUS LAYANAN
+     */
+    public function destroy($id)
+    {
+        $service = Service::findOrFail($id);
+        
+        // Hapus gambar dari storage jika ada
+        if ($service->image) {
+            Storage::disk('public')->delete($service->image);
+        }
+        
+        $service->delete();
+        
+        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil dihapus!');
+    }
 }
