@@ -12,9 +12,7 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        // ==========================================
-        // BAGIAN 1: LOGIKA SETTING LANDING PAGE (Kodingan Lama Kamu)
-        // ==========================================
+
         $setting = LandingSetting::first();
 
         // JAGA-JAGA: Kalau lupa tinker, buat data dummy otomatis
@@ -26,10 +24,6 @@ class AdminDashboardController extends Controller
             ]);
         }
 
-        // ==========================================
-        // BAGIAN 2: LOGIKA STATISTIK & GRAFIK (Kodingan Baru)
-        // ==========================================
-        
         // A. Statistik Kartu
         $totalPendapatan = Booking::where('payment_status', 'paid')->sum('total_price');
         $totalBooking    = Booking::count();
@@ -54,9 +48,7 @@ class AdminDashboardController extends Controller
             $chartData[] = $incomeData[$i] ?? 0;
         }
 
-        // ==========================================
-        // BAGIAN 3: KIRIM SEMUA KE VIEW
-        // ==========================================
+
         return view('admin.dashboard', compact(
             'setting',          // Data Setting
             'totalPendapatan',  // Data Statistik
